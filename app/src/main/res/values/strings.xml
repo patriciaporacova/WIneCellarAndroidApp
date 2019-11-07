@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">WineCellarApp</string>
+    <string name="menu_item">MenuItem</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="air">Air quality</string>
+
 </resources>
