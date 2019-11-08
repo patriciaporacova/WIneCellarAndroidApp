@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new TemperatureFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).commit();
         setTitle(null);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,14 +51,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
-                        case R.id.homeButton:
+                        case R.id.subnavbar_thermometer:
                             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TemperatureFragment()).commit();
                             break;
-                        case R.id.saveRecipe:
+                        case R.id.subnavbar_humidity:
                             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HumidityFragment()).commit();
                             break;
-                        case R.id.shopList:
+                        case R.id.subnavbar_air:
                             MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AirFragment()).commit();
+                            break;
+                        case R.id.subnavbar_home:
+                            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                             break;
                     }
                     return true;
@@ -85,5 +89,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 }

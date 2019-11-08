@@ -8,5 +8,8 @@
     <string name="temperature">Temperature</string>
     <string name="humidity">Humidity</string>
     <string name="air">Air quality</string>
+    <string name="notification">Notifications</string>
+    <string name="home">Home</string>
+    <string name="home_text">Choose the sensors which values you want to see</string>
 
 </resources>

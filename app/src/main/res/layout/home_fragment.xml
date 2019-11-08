@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_text"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:layout_margin="20dp"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+           style="@style/CardStyle"
+            android:id="@+id/cardTemperature"
+          >
+
+            <ImageView
+                style="@style/CardIconStyle"
+                android:src="@drawable/ic_thermometer"
+                ></ImageView>
+
+            <TextView
+                style="@style/CardTextStyle"
+                android:text="@string/temperature"
+                android:textAlignment="center"
+                android:background="@color/colorCardTemperature">
+               </TextView>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            style="@style/CardStyle"
+            android:id="@+id/cardHumidity">
+
+            <ImageView
+                style="@style/CardIconStyle"
+                android:src="@drawable/ic_humidity"
+                ></ImageView>
+
+            <TextView
+                style="@style/CardTextStyle"
+                android:text="@string/humidity"
+                android:textAlignment="center"
+                android:background="@color/colorCardHumidity">
+            </TextView>
+
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            style="@style/CardStyle"
+            android:id="@+id/cardAir">
+
+            <ImageView
+                style="@style/CardIconStyle"
+                android:src="@drawable/ic_air_quality"
+                ></ImageView>
+
+            <TextView
+                style="@style/CardTextStyle"
+                android:text="@string/air"
+                android:textAlignment="center"
+                android:background="@color/ColorCardAir">
+            </TextView>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            style="@style/CardStyle"
+            android:id="@+id/cardNotifications">
+
+            <ImageView
+                style="@style/CardIconStyle"
+                android:src="@drawable/ic_notification"
+                ></ImageView>
+
+            <TextView
+                style="@style/CardTextStyle"
+                android:text="@string/notification"
+                android:textAlignment="center"
+                android:background="@color/colorRed">
+            </TextView>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</LinearLayout>

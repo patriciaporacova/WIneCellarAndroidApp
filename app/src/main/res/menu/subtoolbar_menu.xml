@@ -3,20 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/homeButton"
-        android:icon="@drawable/ic_menu_item"
+        android:id="@+id/subnavbar_home"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="always"
+        android:title="@string/home">
+    </item>
+    <item
+        android:id="@+id/subnavbar_thermometer"
+        android:icon="@drawable/ic_thermometer"
         app:showAsAction="always"
         android:title="@string/temperature">
     </item>
     <item
-        android:id="@+id/saveRecipe"
-        android:icon="@drawable/ic_menu_item"
+        android:id="@+id/subnavbar_humidity"
+        android:icon="@drawable/ic_humidity"
         app:showAsAction="always"
         android:title="@string/humidity">
     </item>
     <item
-        android:id="@+id/shopList"
-        android:icon="@drawable/ic_menu_item"
+        android:id="@+id/subnavbar_air"
+        android:icon="@drawable/ic_air_quality"
         app:showAsAction="always"
         android:title="@string/air">
     </item>
