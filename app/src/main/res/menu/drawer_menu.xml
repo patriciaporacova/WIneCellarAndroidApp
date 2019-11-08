@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Cooking Ideas">
+            <menu>
+                <item
+                    android:id="@+id/nav_dinner"
+                    android:icon="@drawable/ic_menu_item"
+                    android:title="@string/menu_item" />
+            </menu>
+        </item>
+
+        <item android:title="My cooking space">
+
+            <menu>
+                <item
+                    android:id="@+id/nav_myInventory"
+                    android:icon="@drawable/ic_menu_item"
+                    android:title="@string/menu_item" />
+                <item
+                    android:id="@+id/nav_myCookBook"
+                    android:icon="@drawable/ic_menu_item"
+                    android:title="@string/menu_item" />
+               <item
+                    android:id="@+id/nav_groceryList"
+                    android:icon="@drawable/ic_menu_item"
+                    android:title="@string/menu_item" />
+
+            </menu>
+        </item>
+    </group>
+
+    <item android:title="Settings">
+
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_item"
+                android:title="@string/menu_item" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_item"
+                android:title="@string/menu_item"
+                />
+        </menu>
+    </item>
+
+</menu>

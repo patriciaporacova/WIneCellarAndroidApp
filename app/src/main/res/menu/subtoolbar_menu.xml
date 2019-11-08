@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeButton"
+        android:icon="@drawable/ic_menu_item"
+        app:showAsAction="always"
+        android:title="@string/temperature">
+    </item>
+    <item
+        android:id="@+id/saveRecipe"
+        android:icon="@drawable/ic_menu_item"
+        app:showAsAction="always"
+        android:title="@string/humidity">
+    </item>
+    <item
+        android:id="@+id/shopList"
+        android:icon="@drawable/ic_menu_item"
+        app:showAsAction="always"
+        android:title="@string/air">
+    </item>
+
+</menu>
