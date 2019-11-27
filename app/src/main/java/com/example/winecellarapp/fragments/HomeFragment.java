@@ -1,4 +1,4 @@
-package com.example.winecellarapp;
+package com.example.winecellarapp.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+
+import com.example.winecellarapp.R;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 

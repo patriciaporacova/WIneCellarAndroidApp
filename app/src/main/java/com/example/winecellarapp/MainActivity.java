@@ -7,11 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.winecellarapp.fragments.AirFragment;
+import com.example.winecellarapp.fragments.HomeFragment;
+import com.example.winecellarapp.fragments.HumidityFragment;
+import com.example.winecellarapp.fragments.TemperatureFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 

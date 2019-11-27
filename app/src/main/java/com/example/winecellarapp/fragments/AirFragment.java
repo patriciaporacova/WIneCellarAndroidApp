@@ -1,4 +1,4 @@
-package com.example.winecellarapp;
+package com.example.winecellarapp.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class TemperatureFragment extends Fragment {
+import com.example.winecellarapp.R;
+
+public class AirFragment extends Fragment {
 
 
     View view;
@@ -18,7 +20,7 @@ public class TemperatureFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        view = inflater.inflate(R.layout.temperature_fragment_layout, container, false);
+        view = inflater.inflate(R.layout.airquality_fragment_layout, container, false);
 
         return view;
     }}
