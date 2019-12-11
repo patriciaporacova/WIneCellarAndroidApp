@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 
 public class Utils {
     public static CellarAPI getApi() {
-        return CellarClient.getFoodClient().create(CellarAPI.class);
+        return CellarClient.getCellarClient().create(CellarAPI.class);
     }
 
     public static AlertDialog showDialogMessage(View context, String title, String message) {

@@ -11,10 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CellarClient {
 
     //TODO: add base URL
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "https://0a933899.ngrok.io/api/last/";
 
 
-    public static Retrofit getFoodClient() {
+    public static Retrofit getCellarClient() {
 
         return new Retrofit.Builder().baseUrl(BASE_URL)
                 .client(provideOkHttp())

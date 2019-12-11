@@ -1,8 +1,12 @@
 package com.example.winecellarapp;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
+import com.example.winecellarapp.Model.Temperature;
 import com.example.winecellarapp.REST.Utils;
+import com.example.winecellarapp.fragments.TemperatureFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -11,21 +15,23 @@ import retrofit2.Response;
 public class Presenter {
 
     private DataView view;
+    private TemperatureFragment fragment;
 
     public Presenter(DataView view) {
         this.view = view;
     }
 
     public void getSensorData() {
-        Call<Model> mealsCall = Utils.getApi().getData();
-        mealsCall.enqueue(new Callback<Model>() {
+        Call<Temperature> mealsCall = Utils.getApi().getLastTemperature();
+        Log.v("skusam tu", "v callback");
+        mealsCall.enqueue(new Callback<Temperature>() {
             @Override
-            public void onResponse(@NonNull Call<Model> call, @NonNull Response<Model> response) {
+            public void onResponse(@NonNull Call<Temperature> call, @NonNull Response<Temperature> response) {
 
 
                 if (response.isSuccessful() && response.body() != null) {
-
-                    view.setData(response.body().getAllData());
+                    view.setData(response.body());
+                   Log.v("som tu", "v metode");
 
                 } else {
                     view.onErrorLoading(response.message());
@@ -33,7 +39,7 @@ public class Presenter {
             }
 
             @Override
-            public void onFailure(Call<Model> call, Throwable t) {
+            public void onFailure(Call<Temperature> call, Throwable t) {
                 view.onErrorLoading(t.getLocalizedMessage());
             }
 
