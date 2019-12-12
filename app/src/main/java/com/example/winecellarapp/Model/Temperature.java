@@ -10,27 +10,27 @@ public class Temperature {
 
     @SerializedName("date")
     @Expose
-    private Date date;
+    private String date;
     @SerializedName("time")
     @Expose
-    private Time time;
+    private String time;
     @SerializedName("reading")
     @Expose
     private Double reading;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

@@ -11,7 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CellarClient {
 
     //TODO: add base URL
-    private static final String BASE_URL = "https://0a933899.ngrok.io/api/last/";
+   private static final String BASE_URL = "  https://b9e02acb.ngrok.io/api/";    //you need to get your own ngrok instance ...check tutorial https://markzfilter.com/connect-ios-android-app-local-host-server/
+
 
 
     public static Retrofit getCellarClient() {

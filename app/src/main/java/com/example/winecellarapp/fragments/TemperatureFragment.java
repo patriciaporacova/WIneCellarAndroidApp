@@ -13,9 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.winecellarapp.DataView;
+import com.example.winecellarapp.Model.Hello;
 import com.example.winecellarapp.Model.Temperature;
 import com.example.winecellarapp.Presenter;
 import com.example.winecellarapp.R;
+
+import java.util.List;
 
 public class TemperatureFragment extends Fragment implements DataView {
 
@@ -37,14 +40,6 @@ public class TemperatureFragment extends Fragment implements DataView {
         return view;
     }
 
-    /*@Override
-    public void setData(Temperature temperature) {
-
-        tempList.setText("nvksd");
-
-        //String string= temperature.getDate().toString();
-
-    }*/
 
     @Override
     public void setData(Temperature temperature) {
@@ -52,9 +47,12 @@ public class TemperatureFragment extends Fragment implements DataView {
         tempList.setText("nvksd");
     }
 
-    public void showToast(){
-        Toast.makeText(getContext(), "fds", Toast.LENGTH_LONG).show();
+    @Override
+    public void setHello(Hello hello) {
+        tempList= view.findViewById(R.id.temperature_text);
+        tempList.setText(hello.getFirstName());
     }
+
 
     @Override
     public void onErrorLoading(String message) {
