@@ -11,5 +11,9 @@
     <string name="notification">Notifications</string>
     <string name="home">Home</string>
     <string name="home_text">Choose the sensors which values you want to see</string>
+    <string name="temp_title">Temperature</string>
+    <string name="temp_value_title">Last measured temperature value was:</string>
+    <string name="temp_date_title">measured on:</string>
+    <string name="temp_time_title">at:</string>
 
 </resources>

@@ -23,7 +23,7 @@ public class Presenter {
 
     public void getSensorData() {
 
-        Call<Hello> mealsCall = Utils.getApi().getHello();
+       /* Call<Hello> mealsCall = Utils.getApi().getHello();
         Log.d("som tu",  mealsCall.toString());
         mealsCall.enqueue(new Callback<Hello>() {
             @Override
@@ -46,10 +46,10 @@ public class Presenter {
                 view.onErrorLoading(t.getLocalizedMessage());
             }
 
-        });
+        });*/
 
 
-       /* Call<Temperature> mealsCall = Utils.getApi().getLastTemperature();
+       Call<Temperature> mealsCall = Utils.getApi().getLastTemperature();
         Log.d("som tu",  mealsCall.toString());
         mealsCall.enqueue(new Callback<Temperature>() {
             @Override
@@ -72,7 +72,7 @@ public class Presenter {
                 view.onErrorLoading(t.getLocalizedMessage());
             }
 
-        });*/
+        });
 
 
 
