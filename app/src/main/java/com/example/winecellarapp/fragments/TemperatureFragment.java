@@ -17,11 +17,6 @@ import com.example.winecellarapp.Model.Hello;
 import com.example.winecellarapp.Model.Temperature;
 import com.example.winecellarapp.Presenter;
 import com.example.winecellarapp.R;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.util.List;
 
 public class TemperatureFragment extends Fragment implements DataView {
 
@@ -37,7 +32,6 @@ public class TemperatureFragment extends Fragment implements DataView {
 
         presenter = new Presenter(this);
         presenter.getSensorData();
-        setUpGraph();
 
         return view;
     }
@@ -56,18 +50,6 @@ public class TemperatureFragment extends Fragment implements DataView {
     @Override
     public void setHello(Hello hello) {
 
-    }
-
-    public void setUpGraph() {
-        GraphView graph = (GraphView) view.findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
     }
 
     @Override
