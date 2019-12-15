@@ -12,8 +12,16 @@
     <string name="home">Home</string>
     <string name="home_text">Choose the sensors which values you want to see</string>
     <string name="temp_title">Temperature</string>
-    <string name="temp_value_title">Last measured temperature value was:</string>
-    <string name="temp_date_title">measured on:</string>
-    <string name="temp_time_title">at:</string>
+    <string name="temp_value_title">Last measured temperature</string>
+    <string name="temp_date_title">Measured on</string>
+    <string name="temp_time_title">at</string>
+    <string name="timeFormat">hh:mm:ss</string>
+    <string name="dateFormat">dd-MM-yyyy</string>
+    <string name="period" formatted="true">Start date: %s End date: %s</string>
+    <string name="start_date" formatted="true">Start date: \n %s</string>
+    <string name="end_date" formatted="true">End date: %s End date: %s</string>
+    <string name="graphs_text_view">Graphs from time period</string>
+    <string name="change_period">Change</string>
+
 
 </resources>

@@ -23,6 +23,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.home_fragment, container, false);
 
+        //TODO-PATRICIA:click on this button will not change main activity toolbar icon
+        //TODO-PATRICIA: change color of toolbar icon for same color like main color of this buttons
         CardView cardTemperature = (CardView) view.findViewById(R.id.cardTemperature);
         cardTemperature.setOnClickListener(this);
         CardView cardHumidity = (CardView) view.findViewById(R.id.cardHumidity);

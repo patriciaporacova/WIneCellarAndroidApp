@@ -1,4 +1,4 @@
-package com.example.winecellarapp.Model;
+package com.example.winecellarapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

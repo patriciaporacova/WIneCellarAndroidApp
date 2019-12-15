@@ -14,6 +14,7 @@ import com.example.winecellarapp.R;
 public class HumidityFragment extends Fragment {
 
 
+    //TODO-ERIC: Create same layout like temperature fragment(feel free to create your own design or copy paste temperature fragment and change variables and colors)
     View view;
 
     @Nullable

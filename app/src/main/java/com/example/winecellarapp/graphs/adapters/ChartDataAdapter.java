@@ -1,4 +1,4 @@
-package com.example.winecellarapp.Graphs.adapters;
+package com.example.winecellarapp.graphs.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import com.example.winecellarapp.Graphs.graphs.ChartItem;
+import com.example.winecellarapp.graphs.graphs.ChartItem;
 
 import java.util.List;
 

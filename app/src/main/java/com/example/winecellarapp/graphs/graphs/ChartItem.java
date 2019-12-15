@@ -1,4 +1,4 @@
-package com.example.winecellarapp.Graphs.graphs;
+package com.example.winecellarapp.graphs.graphs;
 
 import android.content.Context;
 import android.view.View;
@@ -16,6 +16,7 @@ public abstract class ChartItem {
     static final int TYPE_BARCHART = 0;
     static final int TYPE_LINECHART = 1;
     static final int TYPE_PIECHART = 2;
+    static final int TYPE_BUBBLECHART = 3;
 
     ChartData<?> mChartData;
 

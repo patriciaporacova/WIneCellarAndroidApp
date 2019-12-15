@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.winecellarapp"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -35,5 +35,9 @@ dependencies {
 
     //CHARTS LIBRARY
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //DATE PICKER LIBRARY
+    implementation 'com.github.psinetron:slycalendarview:0.0.9'
+
 
 }

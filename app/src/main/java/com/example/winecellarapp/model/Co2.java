@@ -1,4 +1,4 @@
-package com.example.winecellarapp.Model;
+package com.example.winecellarapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.sql.Date;
 import java.sql.Time;
 
-public class Temperature {
+public class Co2 {
 
     @SerializedName("date")
     @Expose
@@ -22,23 +22,23 @@ public class Temperature {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Time getTime() {
         return time;
+    }
+
+    public double getReading() {
+        return reading;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setTime(Time time) {
         this.time = time;
     }
 
-    public Double getReading() {
-        return reading;
-    }
-
-    public void setReading(Double reading) {
+    public void setReading(double reading) {
         this.reading = reading;
     }
 

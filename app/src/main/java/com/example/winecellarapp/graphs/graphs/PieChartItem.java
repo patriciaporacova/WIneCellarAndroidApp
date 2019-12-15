@@ -1,5 +1,5 @@
 
-package com.example.winecellarapp.Graphs.graphs;
+package com.example.winecellarapp.graphs.graphs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -64,22 +64,16 @@ public class PieChartItem extends ChartItem {
         holder.chart.setCenterTextTypeface(mTf);
         holder.chart.setCenterTextSize(9f);
         holder.chart.setUsePercentValues(true);
-        holder.chart.setExtraOffsets(5, 10, 50, 10);
-
+       // holder.chart.setExtraOffsets(5, 10, 50, 10);
         mChartData.setValueFormatter(new PercentFormatter());
         mChartData.setValueTypeface(mTf);
-        mChartData.setValueTextSize(11f);
+        mChartData.setValueTextSize(8f);
         mChartData.setValueTextColor(Color.WHITE);
         // set data
         holder.chart.setData((PieData) mChartData);
 
         Legend l = holder.chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setYEntrySpace(0f);
-        l.setYOffset(0f);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         // do not forget to refresh the chart
         // holder.chart.invalidate();
