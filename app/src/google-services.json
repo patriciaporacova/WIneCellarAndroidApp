@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "695737841871",
+    "firebase_url": "https://winecellarapp-9fd28.firebaseio.com",
+    "project_id": "winecellarapp-9fd28",
+    "storage_bucket": "winecellarapp-9fd28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695737841871:android:2da3f69b66ca05c1ec9fba",
+        "android_client_info": {
+          "package_name": "com.example.winecellarapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695737841871-laee4k08gltuchno8oj60k927j8ju2ig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.winecellarapp",
+            "certificate_hash": "c225c818862249c1013547b9428b94369e382be6"
+          }
+        },
+        {
+          "client_id": "695737841871-kq37mbsim31oge0fi1k9brbrcrmgqo3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMMCSHliPhvE83w8n8UsD_H8_ADV7n0TA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695737841871-kq37mbsim31oge0fi1k9brbrcrmgqo3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -112,7 +112,7 @@ public class SetGraphsData<T>
                     ArrayList<Temperature> temperatures = (ArrayList<Temperature>)data;
                     for (int j = 0; j < temperatures.size(); j++)
                     {
-                        entries.add(new PieEntry(Float.valueOf(String.valueOf(temperatures.get(j).getReading())), temperatures.get(j).getReading()));
+                        entries.add(new PieEntry(Float.valueOf(String.valueOf(temperatures.get(j).getReading())), ""));
                     }
                     break;
                 }
@@ -169,10 +169,10 @@ public class SetGraphsData<T>
             }
 
         LineDataSet d1 = new LineDataSet(values1, label);
-        d1.setLineWidth(12.5f);
-        d1.setCircleRadius(15.5f);
+        d1.setLineWidth(10.5f);
+        d1.setCircleRadius(10.5f);
         d1.setHighLightColor(Color.rgb(0, 0, 0));
-        d1.setHighlightLineWidth(5.0f);
+        d1.setHighlightLineWidth(3.0f);
         d1.setColor(ColorTemplate.MATERIAL_COLORS[0]);
         d1.setCircleColor(ColorTemplate.MATERIAL_COLORS[0]);
         d1.setDrawValues(false);
