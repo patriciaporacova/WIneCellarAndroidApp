@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+/**Create account activity created by Jakub Piga
+ * It is responsible for creating new account on firebase by e-mail
+ */
 public class CreateAccount extends AppCompatActivity {
 
     private Button mCreateUserButton;
@@ -69,6 +72,11 @@ public class CreateAccount extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks if e-mail address is in valid format
+     * @param email contains e-mail to check
+     * @return true if e-mail is valid, else false
+     */
     private boolean isValidEmail(String email) {
         boolean isGoodEmail =
                 (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches());
@@ -79,6 +87,11 @@ public class CreateAccount extends AppCompatActivity {
         return isGoodEmail;
     }
 
+    /**
+     * Checks if name is in valid format
+     * @param name contains name to check
+     * @return true if name is in valid format, else false
+     */
     private boolean isValidName(String name) {
         if (name.equals("")) {
             mNameEditText.setError("Please enter your name");
@@ -87,6 +100,12 @@ public class CreateAccount extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Check if given passwords are the same
+     * @param password contains first password
+     * @param confirmPassword contains confirm password
+     * @return true if passwords match, else false
+     */
     private boolean isValidPassword(String password, String confirmPassword) {
         if (password.length() < 6) {
             mPasswordEditText.setError("Please create a password containing at least 6 characters");
@@ -97,6 +116,12 @@ public class CreateAccount extends AppCompatActivity {
         }
         return true;
     }
+
+    /**
+     * Method for creating new user from text fields
+     * For creating new user into Firebase method calls createFirebaseUserProfile(final FirebaseUser user)
+     * After user is successfully created MainActivity is called, else fail Toast message
+     */
     private void createNewUser() {
         userName = mNameEditText.getText().toString().trim();
         final String name = mNameEditText.getText().toString().trim();
@@ -130,6 +155,11 @@ public class CreateAccount extends AppCompatActivity {
                     }
                 });
     }
+
+    /**
+     * Sending new user to Firebase
+     * @param user contains new user to add to Firebase
+     */
     private void createFirebaseUserProfile(final FirebaseUser user) {
 
         UserProfileChangeRequest addProfileName = new UserProfileChangeRequest.Builder()
@@ -148,6 +178,10 @@ public class CreateAccount extends AppCompatActivity {
 
                 });
     }
+
+    /**
+     * Creates dialog on waiting time when new user is inserting into the firebase
+     */
     private void createAuthProgressDialog() {
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");

@@ -34,6 +34,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * Login activity includes login with e-mail or google sign-in button
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.passwordLoginButton);
         final TextView createAccount = findViewById(R.id.registerTextView);
 
+        //automatic google sign in if user was logged in before
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
@@ -70,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+        //NOT IMPLEMENTED text watcher
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //get text from text views after log-in button is pressed
         loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //listener for creating new account
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,11 +129,19 @@ public class LoginActivity extends AppCompatActivity {
         createAuthProgressDialog();
         createAuthStateListener();
     }
+
+    /**
+     * tries to authenticate user
+     */
     @Override
     public void onStart() {
         super.onStart();
          mAuth.addAuthStateListener(mAuthListener);
     }
+
+    /**
+     * remove authentication listener
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -135,6 +150,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Listener for authentication
+     * If authentication is successful it opens main activity*/
     private void createAuthStateListener() {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 
@@ -151,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
 
         };
     }
+    /**activity result after getting result from authentication*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -169,11 +188,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * method creates intent for sign it through the google sign in
+     */
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, 1);
     }
 
+    /**
+     * Responsible for authentication user through the Firebase
+     * Includes on complete listeners(sets message about login state)
+     * @param email includes e-mail for log-in
+     * @param password includes password for log-in
+     */
     private void logInUser(String email, String password)
     {
         mAuthProgressDialog.show();
@@ -198,12 +227,20 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Create and displays progress dialog during authentication
+     */
     private void createAuthProgressDialog() {
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
         mAuthProgressDialog.setMessage("Authenticating with Firebase...");
         mAuthProgressDialog.setCancelable(false);
     }
+
+    /**
+     * Authenticate google account
+     * @param acct includes google sign in account of the user
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         Log.d("GOOGLESIGNIN", "firebaseAuthWithGoogle:" + acct.getId());
@@ -221,8 +258,6 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w("GOOGLESIGNIN", "signInWithCredential:failure", task.getException());
                             Snackbar.make(findViewById(R.id.container), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
