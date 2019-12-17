@@ -3,7 +3,9 @@ package com.example.winecellarapp.graphs.setGraphData;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
+
 import com.example.winecellarapp.model.Co2;
+
 import com.example.winecellarapp.model.Humidity;
 import com.example.winecellarapp.model.Temperature;
 import com.github.mikephil.charting.data.BarData;
@@ -33,12 +35,11 @@ import java.util.List;
 public class SetGraphsData<T>
 {
 
-    //TODO-JAKUB: fixed graphs depend on period(wait for database to createApiCalls)
     private DATATYPE action;
     public enum DATATYPE
     {
         TEMPERATURE,
-        HUMUDITY,
+        HUMIDITY,
         AIR,
 
     }
@@ -63,13 +64,19 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
+
                     //TODO-ERIC: change humidity
                     ArrayList<Humidity> humidities = (ArrayList<Humidity>)data;
-                    for (int j = 0; j < humidities.size(); j++)
+                    for (int j = 0; j < humidities.size(); j++) {
+                        entries.add(new BarEntry(j, Float.valueOf(String.valueOf(humidities.get(j).getReading()))));
+                    }
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
                     {
-                        entries.add(new BarEntry(j,Float.valueOf(String.valueOf(humidities.get(j).getReading()))));
+                        entries.add(new BarEntry(j,Float.valueOf(String.valueOf(humidity.get(j).getReading()))));
+
                     }
                     break;
                 }
@@ -117,13 +124,19 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
+
                     //TODO-ERIC: change humidity
                     ArrayList<Humidity> humidities = (ArrayList<Humidity>)data;
-                    for (int j = 0; j < humidities.size(); j++)
-                    {
+                    for (int j = 0; j < humidities.size(); j++) {
                         entries.add(new PieEntry(Float.valueOf(String.valueOf(humidities.get(j).getReading())), ""));
+                    }
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
+                    {
+                        entries.add(new PieEntry(Float.valueOf(String.valueOf(humidity.get(j).getReading())), ""));
+
                     }
                     break;
                 }
@@ -175,9 +188,12 @@ public class SetGraphsData<T>
 
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
+
                     //TODO-ERIC: change humidity
+
+
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
                     {
@@ -255,13 +271,19 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
+
                     //TODO-ERIC: change humidity
                     ArrayList<Humidity> humidities = (ArrayList<Humidity>)data;
-                    for (int j = 0; j < humidities.size(); j++)
+                    for (int j = 0; j < humidities.size(); j++) {
+                        values1.add(new BubbleEntry(i, Float.valueOf(String.valueOf(humidities.get(i).getReading())), i));
+                    }
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
                     {
-                        values1.add(new BubbleEntry(i,Float.valueOf(String.valueOf(humidities.get(i).getReading())),i));
+                        values1.add(new BubbleEntry(i,Float.valueOf(String.valueOf(humidity.get(i).getReading())),i));
+
                     }
                     break;
                 }
