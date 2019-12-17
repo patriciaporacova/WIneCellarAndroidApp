@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.REST.Utils;
-import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.model.Threshold;
 import com.example.winecellarapp.notification.notificationDesign.CreateNotification;
 
@@ -143,7 +142,7 @@ public class NotificationService extends Service {
         Log.i(TAG, "initialising TimerTask");
         timerTask = new TimerTask() {
             public void run() {
-                checkCurrentTemperature();
+                checkOutOfBoundsValues();
             }
         };
     }
@@ -151,31 +150,23 @@ public class NotificationService extends Service {
     /**
      * Get current temperature from database through the API
      */
-    private void checkCurrentTemperature() {
+    private void checkOutOfBoundsValues() {
 
-        Call<Temperature> temperature = Utils.getApi().getLastTemperature("temperature");
-        temperature.enqueue(new Callback<Temperature>() {
+        Call<List<Threshold>> thresholds = Utils.getApi().getOutOfBound();
+        thresholds.enqueue(new Callback<List<Threshold>>() {
             @Override
-            public void onResponse(@NonNull Call<Temperature> call, @NonNull Response<Temperature> response) {
+            public void onResponse(@NonNull Call<List<Threshold>> call, @NonNull Response<List<Threshold>> response) {
 
-                if (response.isSuccessful() && response.body() != null) {
-                    if (response.body().getReading() > tempMax)
-                    {
-                        createTempWarningNotification("Temperature too HIGH",R.color.colorRed);
-                    }
-                    else if(response.body().getReading() < tempMin)
-                    {
-                        createTempWarningNotification("Temperature too LOW",R.color.lowTemperature);
-                    }
-                        Log.i(TAG, (response.body()).getReading().toString());
-
-                } else {
-                    createTempWarningNotification("Problem with controlling temperature",R.color.colorAccent);
+                if (response.isSuccessful() && response.body() != null)
+                {
+                    if(response.body().size() != 0)
+                        checkOutOfBoundSensor(response.body());
                 }
+
             }
 
             @Override
-            public void onFailure(Call<Temperature> call, Throwable t) {
+            public void onFailure(Call<List<Threshold>> call, Throwable t) {
                 createTempWarningNotification("Problem with controlling temperature",R.color.colorAccent);
             }
 
@@ -217,6 +208,41 @@ public class NotificationService extends Service {
             temperatureCreateNotification = new CreateNotification();
 
         startForeground(1234, temperatureCreateNotification.setNotification(this,"Temperature WARNING", message,R.drawable.ic_bell,true, color));
+    }
+
+    private void checkOutOfBoundSensor(List<Threshold> thresholds)
+    {
+        for (int i = 0; i < thresholds.size(); i++)
+        {
+            if(thresholds.get(i) != null)
+            {
+                if(thresholds.get(i).getSensorType().equalsIgnoreCase("CO2"))
+                {
+                    if (thresholds.get(i).getMinValue() < airMin)
+                        createTempWarningNotification("CO2 too LOW",R.color.lowTemperature);
+                    else
+                        createTempWarningNotification("CO2 too HIGH",R.color.colorRed);
+                }
+                else if(thresholds.get(i).getSensorType().equalsIgnoreCase("Temperature"))
+                {
+                    if (thresholds.get(i).getMinValue() < tempMin)
+                        createTempWarningNotification("Temperature too LOW",R.color.lowTemperature);
+                    else
+                        createTempWarningNotification("CO2 too HIGH",R.color.colorRed);
+                }
+                else if(thresholds.get(i).getSensorType().equalsIgnoreCase("Humidity"))
+                {
+                    if (thresholds.get(i).getMinValue() < tempMin)
+                        createTempWarningNotification("Humidity too LOW",R.color.lowTemperature);
+                    else
+                        createTempWarningNotification("Humidity too HIGH",R.color.colorRed);
+                }
+                else
+                {
+
+                }
+            }
+        }
     }
 
 }
