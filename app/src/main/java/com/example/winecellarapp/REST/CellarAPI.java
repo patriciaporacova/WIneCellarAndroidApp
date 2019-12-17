@@ -1,6 +1,7 @@
 package com.example.winecellarapp.REST;
 
 
+import com.example.winecellarapp.model.Co2;
 import com.example.winecellarapp.model.Humidity;
 import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.model.Threshold;
@@ -20,11 +21,18 @@ public interface CellarAPI {
     @GET("last/{sensortype}")
     Call<Humidity> getLastHumidity(@Path("sensortype") String sensorType);
 
+    @GET("last/{sensortype}")
+    Call<Co2> getLastAir(@Path("sensortype") String sensorType);
+
     @GET("average/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getAverageTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
     @GET("average/{sensortype}/{startDate}/{endDate}")
     Call<List<Humidity>> getAvarageHumidityBetween(@Path("sensortype")String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
+
+    @GET("average/{sensortype}/{startDate}/{endDate}")
+    Call<List<Co2>> getAverageAirBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date, @Path("endDate") DatePathFormatter endDate);
+
 
     @GET("sensordata/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);

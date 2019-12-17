@@ -26,7 +26,7 @@ public class Co2 {
         return time;
     }
 
-    public double getReading() {
+    public Double getReading() {
         return reading;
     }
 
@@ -38,7 +38,7 @@ public class Co2 {
         this.time = time;
     }
 
-    public void setReading(double reading) {
+    public void setReading(Double reading) {
         this.reading = reading;
     }
 
