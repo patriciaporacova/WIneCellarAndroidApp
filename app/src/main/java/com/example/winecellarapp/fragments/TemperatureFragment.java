@@ -52,10 +52,13 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     private SetGraphsData graphsData;
     private ListView lv;
 
+    private TextView tempValue, tempDate, startDate, endDate;
+    private ProgressBar progressBarTemp, progressBarTempGraphs;
+    private Button changePeriodBtn;
 
 
 
-    @BindView(R.id.temperature_text)
+   /* @BindView(R.id.temperature_text)
     TextView tempValue;
     @BindView(R.id.temperature_date)
     TextView tempDate;
@@ -68,7 +71,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     @BindView(R.id.progressBarTempGraphs)
     ProgressBar progressBarTempGraphs;
     @BindView(R.id.changePeriod)
-    Button changePeriodBtn;
+    Button changePeriodBtn;*/
 
 
     /**onCreateView for fragment*/
@@ -78,7 +81,15 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.temperature_fragment_layout, container, false);
 
-        ButterKnife.bind(this, view);
+        //ButterKnife.bind(this, view);
+
+        tempValue = view.findViewById(R.id.temperature_text);
+        tempDate = view.findViewById(R.id.temperature_date);
+        progressBarTemp = view.findViewById(R.id.progressBarTempValue);
+        progressBarTempGraphs = view.findViewById(R.id.progressBarTempGraphs);
+        startDate = view.findViewById(R.id.start_date_temp);
+        endDate = view.findViewById(R.id.end_date_temp);
+        changePeriodBtn = view.findViewById(R.id.changePeriod);
 
         dates = new Date[2];
 
