@@ -3,33 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
     android:gravity="center"
     android:orientation="vertical">
 
 
     <TextView
+        style="@style/fragment_title"
         android:id="@+id/currentHumidity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:text="@string/last_measured_humidity"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/fragment_value_text"
         android:id="@+id/humidity_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="40sp"
-        android:textStyle="bold"
+        android:textColor="@color/humidity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentHumidity" />
@@ -45,20 +34,16 @@
         app:layout_constraintTop_toBottomOf="@+id/humidity_text">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/fragment_measured_text"
             android:text="@string/humidity_date_title"
-            android:textColor="@android:color/white"
-            android:textSize="10sp" />
+            />
 
         <TextView
+            style="@style/fragment_measured_text"
             android:id="@+id/humidity_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:textColor="@android:color/white"
-            android:textSize="10sp" />
+            />
     </LinearLayout>
 
     <ProgressBar
@@ -66,32 +51,23 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@color/humidity"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentHumidity" />
 
     <TextView
+        style="@style/fragment_subtitle"
         android:id="@+id/graphs_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="@string/graphs_text_view"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
+        style="@style/fragment_date_text"
         android:id="@+id/start_date_humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_humidity"
         app:layout_constraintEnd_toStartOf="@+id/changePeriod"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,12 +89,8 @@
         app:strokeWidth="2dp" />
 
     <TextView
+        style="@style/fragment_date_text"
         android:id="@+id/end_date_humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_humidity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/changePeriod"
@@ -129,6 +101,8 @@
         android:id="@+id/list_graphs_humidity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,6 +115,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@color/humidity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/list_graphs_humidity"
         app:layout_constraintStart_toStartOf="parent"

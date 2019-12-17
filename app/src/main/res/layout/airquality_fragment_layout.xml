@@ -8,27 +8,17 @@
     android:orientation="vertical">
 
     <TextView
+        style="@style/fragment_title"
         android:id="@+id/currentAir"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:text="@string/air_value_title"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/fragment_value_text"
         android:id="@+id/air_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="40sp"
-        android:textStyle="bold"
+        android:textColor="@android:color/holo_green_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentAir" />
@@ -44,20 +34,16 @@
         app:layout_constraintTop_toBottomOf="@+id/air_text">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/fragment_measured_text"
             android:text="@string/temp_date_title"
-            android:textColor="@android:color/black"
-            android:textSize="10sp" />
+             />
 
         <TextView
+            style="@style/fragment_measured_text"
             android:id="@+id/air_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:textColor="@android:color/black"
-            android:textSize="10sp" />
+             />
     </LinearLayout>
 
 
@@ -66,32 +52,23 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayoutAir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentAir" />
 
     <TextView
+        style="@style/fragment_subtitle"
         android:id="@+id/graphs_text_view_Air"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="@string/graphs_text_view"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutAir" />
 
     <TextView
+        style="@style/fragment_date_text"
         android:id="@+id/start_date_Air"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_air"
         app:layout_constraintEnd_toStartOf="@+id/changePeriodAir"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_period"
+        android:layout_marginTop="10dp"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toStartOf="@id/end_date_air"
         app:layout_constraintStart_toEndOf="@+id/start_date_Air"
@@ -113,12 +91,8 @@
         app:strokeWidth="2dp" />
 
     <TextView
+        style="@style/fragment_date_text"
         android:id="@+id/end_date_air"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_air"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/changePeriodAir"
@@ -129,6 +103,8 @@
         android:id="@+id/list_graphs_air"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,6 +117,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/list_graphs_air"
         app:layout_constraintStart_toStartOf="parent"

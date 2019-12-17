@@ -7,14 +7,16 @@
 
     <color name="colorCardTemperature">#CCF28C0F</color>
     <color name="colorCardHumidity">#CCF2BB13</color>
-    <color name="ColorCardAir">#CCD9A577</color>
+    <color name="ColorCardAir">#CCa4c639</color>
     <color name="ColorCardBgr">#F2F2F2</color>
     <color name="colorRed">#CCA61B0F</color>
     <color name="CardIconBlack">#80000000</color>
     <color name="colorGray">#809C9C9C</color>
     <color name="lowTemperature">#126EB8</color>
 
-
+    <color name="humidity">#F2BB13</color>
+    <color name="temperature">#F28C0F</color>
+    <color name="lightGrey">#109C9C9C</color>
 
 
 
