@@ -71,7 +71,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
 
         //data for the graphs, set data type humidity
         graphsData = new SetGraphsData();
-        graphsData.setAction(SetGraphsData.DATATYPE.HUMUDITY);
+        graphsData.setAction(SetGraphsData.DATATYPE.HUMIDITY);
         //list view for the graphs
         lv = view.findViewById(R.id.list_graphs_humidity);
         //callback class for API calls

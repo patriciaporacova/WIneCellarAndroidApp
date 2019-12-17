@@ -32,12 +32,11 @@ import java.util.List;
 public class SetGraphsData<T>
 {
 
-    //TODO-JAKUB: fixed graphs depend on period(wait for database to createApiCalls)
     private DATATYPE action;
     public enum DATATYPE
     {
         TEMPERATURE,
-        HUMUDITY,
+        HUMIDITY,
         AIR,
 
     }
@@ -57,7 +56,7 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
@@ -105,7 +104,7 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
@@ -155,7 +154,7 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
@@ -229,7 +228,7 @@ public class SetGraphsData<T>
                     break;
                 }
 
-                case HUMUDITY:
+                case HUMIDITY:
                 {
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
