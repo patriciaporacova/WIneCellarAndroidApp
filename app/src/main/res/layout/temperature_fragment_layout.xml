@@ -78,13 +78,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_period"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/temperature"
         app:layout_constraintEnd_toStartOf="@id/end_date_temp"
         app:layout_constraintStart_toEndOf="@+id/start_date_temp"
         app:layout_constraintTop_toBottomOf="@+id/graphs_text_view"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_temperature"
         app:rippleColor="@color/colorPrimary"
-        app:strokeColor="@color/colorAccent"
+        app:strokeColor="@color/temperature"
         app:strokeWidth="2dp" />
 
     <TextView
