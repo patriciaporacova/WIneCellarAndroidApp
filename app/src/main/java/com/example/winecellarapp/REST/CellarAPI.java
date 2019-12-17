@@ -32,8 +32,8 @@ public interface CellarAPI {
     @GET("/threshold/{sensortype}/{minValue}/{maxValue}")
     Call<Void> setHumidityThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
 
-    @GET("/getThresholds")
-    Call<List<Temperature>> getThresholds();
+    @GET("/getthresholds")
+    Call<List<Threshold>> getThresholds();
 
     @GET("/average/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getAverageSensorFromDates(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);

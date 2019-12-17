@@ -26,7 +26,7 @@ public class Humidity {
         return time;
     }
 
-    public double getReading() {
+    public Double getReading() {
         return reading;
     }
 
