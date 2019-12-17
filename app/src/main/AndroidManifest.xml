@@ -2,8 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.winecellarapp">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_LAUNCH_BROADCASTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
+    <!--required by Android 9-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +29,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <service android:name=".notification.restarter.JobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
+
+        <service
+            android:name=".notification.NotificationService"
+            android:permission="android.permission.VIBRATE"
+            android:clearTaskOnLaunch="true"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            />
+
+
+        <receiver
+            android:name=".notification.restarter.RestartServiceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="StartMyServiceAtBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="com.example.activity_recognition.sensor_service.RestartSensor"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
