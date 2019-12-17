@@ -3,6 +3,7 @@ package com.example.winecellarapp.graphs.setGraphData;
 import android.graphics.Color;
 import android.graphics.Typeface;
 
+import com.example.winecellarapp.model.Humidity;
 import com.example.winecellarapp.model.Temperature;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -58,8 +59,11 @@ public class SetGraphsData<T>
 
                 case HUMUDITY:
                 {
-                    //TODO-ERIC: change humidity
-                    boolean setFuckingAnoyingUnderliningFromSwitchAway = true;
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
+                    {
+                        entries.add(new BarEntry(j,Float.valueOf(String.valueOf(humidity.get(j).getReading()))));
+                    }
                     break;
                 }
                 case TEMPERATURE:
@@ -103,8 +107,11 @@ public class SetGraphsData<T>
 
                 case HUMUDITY:
                 {
-                    //TODO-ERIC: change humidity
-                    boolean setFuckingAnoyingUnderliningFromSwitchAway = true;
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
+                    {
+                        entries.add(new PieEntry(Float.valueOf(String.valueOf(humidity.get(j).getReading())), ""));
+                    }
                     break;
                 }
                 case TEMPERATURE:
@@ -150,8 +157,11 @@ public class SetGraphsData<T>
 
                 case HUMUDITY:
                 {
-                    //TODO-ERIC: change humidity
-                    boolean setFuckingAnoyingUnderliningFromSwitchAway = true;
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
+                    {
+                        values1.add(new Entry(j, Float.valueOf(String.valueOf(humidity.get(j).getReading()))));
+                    }
                     break;
                 }
                 case TEMPERATURE:
@@ -221,8 +231,11 @@ public class SetGraphsData<T>
 
                 case HUMUDITY:
                 {
-                    //TODO-ERIC: change humidity
-                    boolean setFuckingAnoyingUnderliningFromSwitchAway = true;
+                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
+                    for (int j = 0; j < humidity.size(); j++)
+                    {
+                        values1.add(new BubbleEntry(i,Float.valueOf(String.valueOf(humidity.get(i).getReading())),i));
+                    }
                     break;
                 }
                 case TEMPERATURE:
