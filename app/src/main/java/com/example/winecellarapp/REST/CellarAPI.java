@@ -2,6 +2,7 @@ package com.example.winecellarapp.REST;
 
 
 import com.example.winecellarapp.model.Hello;
+import com.example.winecellarapp.model.Humidity;
 import com.example.winecellarapp.model.Temperature;
 
 import java.util.Date;
@@ -25,6 +26,12 @@ public interface CellarAPI {
 
     @GET("/threshold/{sensortype}/{minValue}/{maxValue}")
     Call<Void> setHumidityThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
+
+    @GET("last/{sensortype}")
+    Call<Humidity> getLastHumidity(@Path("sensortype") String sensorType);
+
+    @GET("average/{sensortype}/{startDate}/{endDate}")
+    Call<List<Humidity>> getAvarageHumidityBetween(@Path("sensortype")String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
     @GET("/getThresholds")
     Call<List<Temperature>> getThresholds();
