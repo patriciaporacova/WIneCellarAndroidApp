@@ -27,9 +27,9 @@ public class CreateNotification
 {
     private PendingIntent notificationPendingIntent;
 
-    public Notification setNotification(Context context, String title, String text, int icon, boolean alarmSound, int color)
+    public android.app.Notification setNotification(Context context, String title, String text, int icon, boolean alarmSound, int color)
     {
-        Notification notification;
+        android.app.Notification notification;
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (notificationPendingIntent == null)
@@ -40,17 +40,14 @@ public class CreateNotification
         }
 
         // OREO
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
-            CharSequence name = "NULL";
-            //mContext.getString(R.string.channel_name);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            CharSequence name = "WebCellarApp";
             int importance = NotificationManager.IMPORTANCE_LOW;
 
             String CHANNEL_ID = "com.example.channel";
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            //String description = mContext.getString(R.string.notifications_description);
-            String description = "NULL";
+            String description = "Check Temperature Service";
             channel.setDescription(description);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
             if (notificationManager != null)

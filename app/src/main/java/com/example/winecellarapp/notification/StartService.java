@@ -31,7 +31,7 @@ public class StartService
             context.startForegroundService(serviceIntent);
         else
             context.startService(serviceIntent);
-        Log.d("NotificationService", "Notification NotificationService started");
+        Log.d("NotificationService", "CreateNotification NotificationService started");
     }
 
     public void stopService(Context context)
@@ -40,7 +40,7 @@ public class StartService
             return;
         setIntent(context);
         context.stopService(serviceIntent);
-        Log.d("NotificationService", "Notification Service ended");
+        Log.d("NotificationService", "CreateNotification Service ended");
     }
 }
 

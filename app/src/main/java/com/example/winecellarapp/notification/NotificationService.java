@@ -1,21 +1,19 @@
 package com.example.winecellarapp.notification;
 
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.REST.Utils;
 import com.example.winecellarapp.model.Temperature;
+import com.example.winecellarapp.model.Threshold;
 import com.example.winecellarapp.notification.notificationDesign.CreateNotification;
 
 import java.util.List;
@@ -35,7 +33,11 @@ public class NotificationService extends Service {
     private static TimerTask timerTask;
     private double tempMin;
     private double tempMax;
-    CreateNotification temperatureNotification;
+    private double humMin;
+    private double humMax;
+    private double airMin;
+    private double airMax;
+    CreateNotification temperatureCreateNotification;
     public NotificationService()
     {
         super();
@@ -89,7 +91,7 @@ public class NotificationService extends Service {
             {
                 CreateNotification createNotification = new CreateNotification();
                 startForeground(1234, createNotification.setNotification(this,
-                        "WineCellar service", "Controlling current temperature",
+                        "WineCellar service", "Controlling cellar conditions",
                         R.drawable.ic_bell,false,R.color.ColorCardBgr));
                 Log.i(TAG, "restarting foreground successful");
                 startAPIObserver();
@@ -183,21 +185,25 @@ public class NotificationService extends Service {
 
     private void getMaxAndMinValues() {
 
-        Call<List<Temperature>> temperature = Utils.getApi().getThresholds();
-        temperature.enqueue(new Callback<List<Temperature>>() {
+        Call<List<Threshold>> temperature = Utils.getApi().getThresholds();
+        temperature.enqueue(new Callback<List<Threshold>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Temperature>> call, @NonNull Response<List<Temperature>> response) {
+            public void onResponse(@NonNull Call<List<Threshold>> call, @NonNull Response<List<Threshold>> response) {
 
                 if (response.isSuccessful() && response.body() != null) {
-                    tempMin = response.body().get(0).getReading();
-                    tempMax = response.body().get(1).getReading();
+                    tempMin = response.body().get(0).getMinValue();
+                    tempMax = response.body().get(0).getMaxValue();
+                    humMin = response.body().get(1).getMinValue();
+                    humMax = response.body().get(1).getMaxValue();
+                    airMin = response.body().get(2).getMinValue();
+                    airMax = response.body().get(2).getMaxValue();
 
                 } else
                     Log.i(TAG, response.message());
             }
 
             @Override
-            public void onFailure(Call<List<Temperature>> call, Throwable t) {
+            public void onFailure(Call<List<Threshold>> call, Throwable t) {
                 Log.i(TAG, t.getLocalizedMessage());
             }
 
@@ -207,10 +213,10 @@ public class NotificationService extends Service {
 
     private void createTempWarningNotification(String message, int color)
     {
-        if(temperatureNotification ==  null)
-            temperatureNotification = new CreateNotification();
+        if(temperatureCreateNotification ==  null)
+            temperatureCreateNotification = new CreateNotification();
 
-        startForeground(1234, temperatureNotification.setNotification(this,"Temperature WARNING", message,R.drawable.ic_bell,true, color));
+        startForeground(1234, temperatureCreateNotification.setNotification(this,"Temperature WARNING", message,R.drawable.ic_bell,true, color));
     }
 
 }
