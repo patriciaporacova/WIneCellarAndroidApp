@@ -94,7 +94,7 @@
 
             <TextView
                 style="@style/CardTextStyle"
-                android:text="@string/notification"
+                android:text="@string/createNotification"
                 android:textAlignment="center"
                 android:background="@color/colorRed">
             </TextView>
