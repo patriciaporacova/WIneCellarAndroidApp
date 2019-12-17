@@ -1,11 +1,10 @@
 package com.example.winecellarapp.REST;
 
 
-import com.example.winecellarapp.model.Hello;
 import com.example.winecellarapp.model.Humidity;
 import com.example.winecellarapp.model.Temperature;
+import com.example.winecellarapp.model.Threshold;
 
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,17 +32,18 @@ public interface CellarAPI {
     @GET("/threshold/{sensortype}/{minValue}/{maxValue}")
     Call<Void> setHumidityThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
 
-    @GET("/getThresholds")
-    Call<List<Temperature>> getThresholds();
-
     @GET("/average/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getAverageSensorFromDates(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
-    @GET("/minMax/{sensortype}/{startDate}/{endDate}")
+    @GET("/getthresholds")
+    Call<List<Threshold>> getThresholds();
+    
+    @GET("/minmax/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getMinAndMaxFromDates(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
-    @GET("/avgHour/{sensortype}/{date}")
+    @GET("/avghour/{sensortype}/{date}")
     Call<List<Temperature>> getAverageSensorFromDay(@Path("sensortype") String sensorType);
 
-
+    @GET("/outofbounds")
+    Call<List<Threshold>> getOutOfBound();
 }
