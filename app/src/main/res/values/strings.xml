@@ -41,6 +41,7 @@
     <string name="menu_logout">Log out</string>
     <string name="menu_profile">Profile</string>
     <string name="humidity_date_title">humidity_date_title</string>
+    <string name="last_measured_humidity">Last measured humidity</string>
 
 
 </resources>
