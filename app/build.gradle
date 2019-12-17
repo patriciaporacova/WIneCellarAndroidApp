@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.winecellarapp"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility = 1.8
+        sourceCompatibility = 1.8
     }
 }
 
@@ -48,6 +52,9 @@ dependencies {
 
     //GOOGLE AUTH
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
+    //Butteknife
+     implementation 'com.jakewharton:butterknife:10.2.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -17,9 +17,6 @@ public interface CellarAPI {
     @GET("last/{sensortype}")
     Call<Temperature> getLastTemperature(@Path("sensortype") String sensorType);
 
-    @GET("hello")
-    Call<Hello> getHello();
-
     @GET("average/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getAverageTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 

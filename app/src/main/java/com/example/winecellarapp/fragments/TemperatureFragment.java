@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.winecellarapp.DataView;
 import com.example.winecellarapp.calendar.CalendarCallback;
@@ -29,6 +30,11 @@ import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.presenters.TemperaturePresenter;
 import com.example.winecellarapp.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,13 +47,32 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
 
     private View view;
     private TemperaturePresenter temperaturePresenter;
-    private TextView tempValue, tempDate, startDate, endDate;
-    private ProgressBar progressBarTemp, progressBarTempGraphs;
     private CalendarCallback calendarCallback;
     private Date[] dates;
     private SetGraphsData graphsData;
     private ListView lv;
+
+    private TextView tempValue, tempDate, startDate, endDate;
+    private ProgressBar progressBarTemp, progressBarTempGraphs;
     private Button changePeriodBtn;
+
+
+
+   /* @BindView(R.id.temperature_text)
+    TextView tempValue;
+    @BindView(R.id.temperature_date)
+    TextView tempDate;
+    @BindView(R.id.start_date_temp)
+    TextView startDate;
+    @BindView(R.id.end_date_temp)
+    TextView endDate;
+    @BindView(R.id.progressBarTempValue)
+    ProgressBar progressBarTemp;
+    @BindView(R.id.progressBarTempGraphs)
+    ProgressBar progressBarTempGraphs;
+    @BindView(R.id.changePeriod)
+    Button changePeriodBtn;*/
+
 
     /**onCreateView for fragment*/
     @Nullable
@@ -56,14 +81,17 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.temperature_fragment_layout, container, false);
 
+        //ButterKnife.bind(this, view);
+
         tempValue = view.findViewById(R.id.temperature_text);
         tempDate = view.findViewById(R.id.temperature_date);
         progressBarTemp = view.findViewById(R.id.progressBarTempValue);
         progressBarTempGraphs = view.findViewById(R.id.progressBarTempGraphs);
         startDate = view.findViewById(R.id.start_date_temp);
         endDate = view.findViewById(R.id.end_date_temp);
-        dates = new Date[2];
         changePeriodBtn = view.findViewById(R.id.changePeriod);
+
+        dates = new Date[2];
 
         //data for the graphs, set data type temperature
         graphsData = new SetGraphsData();

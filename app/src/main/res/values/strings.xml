@@ -37,6 +37,9 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="server_client_id">"695737841871-kq37mbsim31oge0fi1k9brbrcrmgqo3n.apps.googleusercontent.com"</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Log out</string>
+    <string name="menu_profile">Profile</string>
 
 
 </resources>
