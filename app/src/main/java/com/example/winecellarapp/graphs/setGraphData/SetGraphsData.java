@@ -48,7 +48,7 @@ public class SetGraphsData<T>
      *
      * @return Bar data
      */
-    public BarData generateDataBar(String label, List<T> data)
+    public BarData generateDataBar(String label, List<T> data, ArrayList<Integer> xAxisValue)
     {
         ArrayList<BarEntry> entries = new ArrayList<>();
             switch (action)
@@ -59,7 +59,7 @@ public class SetGraphsData<T>
                     ArrayList<Co2> air = (ArrayList<Co2>)data;
                     for (int j = 0; j < air.size(); j++)
                     {
-                        entries.add(new BarEntry(j,Float.valueOf(String.valueOf(air.get(j).getReading()))));
+                        entries.add(new BarEntry(xAxisValue.get(j),Float.valueOf(String.valueOf(air.get(j).getReading()))));
                     }
                     break;
                 }
@@ -70,13 +70,7 @@ public class SetGraphsData<T>
                     //TODO-ERIC: change humidity
                     ArrayList<Humidity> humidities = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidities.size(); j++) {
-                        entries.add(new BarEntry(j, Float.valueOf(String.valueOf(humidities.get(j).getReading()))));
-                    }
-                    ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
-                    for (int j = 0; j < humidity.size(); j++)
-                    {
-                        entries.add(new BarEntry(j,Float.valueOf(String.valueOf(humidity.get(j).getReading()))));
-
+                        entries.add(new BarEntry(xAxisValue.get(j), Float.valueOf(String.valueOf(humidities.get(j).getReading()))));
                     }
                     break;
                 }
@@ -85,7 +79,7 @@ public class SetGraphsData<T>
                     ArrayList<Temperature> temperatures = (ArrayList<Temperature>)data;
                     for (int j = 0; j < temperatures.size(); j++)
                     {
-                        entries.add(new BarEntry(j,Float.valueOf(String.valueOf(temperatures.get(j).getReading()))));
+                        entries.add(new BarEntry(xAxisValue.get(j),Float.valueOf(String.valueOf(temperatures.get(j).getReading()))));
                     }
                     break;
                 }
@@ -169,7 +163,7 @@ public class SetGraphsData<T>
      *
      * @return Line data
      */
-    public LineData generateDataLine(String label, List<T> data) {
+    public LineData generateDataLine(String label, List<T> data, ArrayList<Integer> xAxisValue) {
 
         ArrayList<Entry> values1 = new ArrayList<>();
 
@@ -181,7 +175,7 @@ public class SetGraphsData<T>
                     ArrayList<Co2> air = (ArrayList<Co2>)data;
                     for (int j = 0; j < air.size(); j++)
                     {
-                        values1.add(new Entry(j, Float.valueOf(String.valueOf(air.get(j).getReading()))));
+                        values1.add(new Entry(xAxisValue.get(j), Float.valueOf(String.valueOf(air.get(j).getReading()))));
                     }
                     break;
 
@@ -197,7 +191,7 @@ public class SetGraphsData<T>
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
                     {
-                        values1.add(new Entry(j, Float.valueOf(String.valueOf(humidity.get(j).getReading()))));
+                        values1.add(new Entry(xAxisValue.get(j), Float.valueOf(String.valueOf(humidity.get(j).getReading()))));
                     }
                     break;
                 }
@@ -206,7 +200,7 @@ public class SetGraphsData<T>
                     ArrayList<Temperature> temperatures = (ArrayList<Temperature>)data;
                     for (int j = 0; j < temperatures.size(); j++)
                     {
-                        values1.add(new Entry(j, Float.valueOf(String.valueOf(temperatures.get(j).getReading()))));
+                        values1.add(new Entry(xAxisValue.get(j), Float.valueOf(String.valueOf(temperatures.get(j).getReading()))));
                     }
                     break;
                 }

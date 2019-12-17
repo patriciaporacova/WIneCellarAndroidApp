@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+/**
+ * Class starting Service for code version less than LOLLIPOP
+ */
 public class StartService
 {
     private static Intent serviceIntent = null;
@@ -34,6 +37,11 @@ public class StartService
         Log.d("NotificationService", "CreateNotification NotificationService started");
     }
 
+    //TODO:UNTESTED METHOD
+    /**
+     * Stop service
+     * @param context
+     */
     public void stopService(Context context)
     {
         if (context == null)

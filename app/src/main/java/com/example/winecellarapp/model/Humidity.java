@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.sql.Date;
 import java.sql.Time;
 
+/**
+ * Model class for humidity
+ */
 public class Humidity {
 
     @SerializedName("date")
