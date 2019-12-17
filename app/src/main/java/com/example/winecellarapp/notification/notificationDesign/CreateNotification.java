@@ -27,9 +27,19 @@ public class CreateNotification
 {
     private PendingIntent notificationPendingIntent;
 
-    public android.app.Notification setNotification(Context context, String title, String text, int icon, boolean alarmSound, int color)
+    /**
+     * Creates custom notification for the android
+     * @param context main context
+     * @param title includes title of the notification
+     * @param text includes text for notification
+     * @param icon includes icon for the notification
+     * @param alarmSound if notification should trigger the alarm
+     * @param color color of the notification
+     * @return created notification with specific parameters
+     */
+    public Notification setNotification(Context context, String title, String text, int icon, boolean alarmSound, int color)
     {
-        android.app.Notification notification;
+        Notification notification;
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (notificationPendingIntent == null)

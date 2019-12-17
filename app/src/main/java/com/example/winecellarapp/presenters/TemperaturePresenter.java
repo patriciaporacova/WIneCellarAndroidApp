@@ -17,6 +17,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by Jakub Piga
+ * Class sending API calls and sending response to view trough the DataView interface
+ */
 public class TemperaturePresenter {
 
     private DataView view;
@@ -25,6 +29,9 @@ public class TemperaturePresenter {
         this.view = view;
     }
 
+    /**
+     * API call for getting last measured temperature from temperature sensor
+     */
     public void getTempSensorData()
     {
 
@@ -51,6 +58,12 @@ public class TemperaturePresenter {
         });
 
     }
+
+    /**
+     * API call for getting average day temperatures between dates
+     * @param start contains start Date
+     * @param end contains end Date
+     */
     public void getTempBetweenData(Date start, Date end)
     {
         DatePathFormatter startFormated = new DatePathFormatter(start);

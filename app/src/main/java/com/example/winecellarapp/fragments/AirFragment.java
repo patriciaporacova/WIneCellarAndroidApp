@@ -19,11 +19,13 @@ import com.example.winecellarapp.DataView;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
+import com.example.winecellarapp.graphs.CreateGraphs;
 import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
 import com.example.winecellarapp.graphs.graphs.BarChartItem;
 import com.example.winecellarapp.graphs.graphs.ChartItem;
 import com.example.winecellarapp.graphs.graphs.LineChartItem;
 import com.example.winecellarapp.graphs.graphs.PieChartItem;
+import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Co2;
 import com.example.winecellarapp.model.Temperature;
@@ -37,7 +39,7 @@ import java.util.List;
 
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class AirFragment extends Fragment implements DataView, ICalendarCallback {
+public class AirFragment extends Fragment implements DataView, ICalendarCallback,ISensorFragment {
 
 
     //TODO-PATRICIA: Create same layout like temperature fragment(feel free to create your own design or copy paste temperature fragment and change variables and colors)
@@ -45,7 +47,10 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     private AirPresenter airPresenter;
     private CalendarCallback calendarCallback;
     private Date[] airDates;
+    private ArrayList<Integer> xAxis;
     private SetGraphsData graphsData;
+    private CreateGraphsData createGraphsData;
+    private CreateGraphs createGraphs;
     private ListView lv;
 
     private TextView co2Value, co2Date, startDate, endDate;
@@ -69,6 +74,8 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
         airDates = new Date[2];
 
         graphsData = new SetGraphsData();
+        createGraphsData = new CreateGraphsData();
+        createGraphs = new CreateGraphs(getContext());
         graphsData.setAction(SetGraphsData.DATATYPE.AIR);
 
         lv = view.findViewById(R.id.list_graphs_air);
@@ -76,7 +83,8 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
         airPresenter= new AirPresenter(this);
         airPresenter.getAirSensorData();
 
-        setFirstAndLastDates();
+        airDates = createGraphsData.setFirstAndLastDates();
+        xAxis = createGraphsData.setXAxisValues(airDates);
         setDatesToTextView();
 
         airPresenter.getAirBetweenData(airDates[0], airDates[1]);
@@ -108,8 +116,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     public void setData(Object obj)
     {
         progressBarCo2.setVisibility(View.INVISIBLE);
-        co2Value.setText(((Co2)obj).getReading().toString());
-        co2Date.setText(((Co2)obj).getDate().toString() + " at " +((Co2)obj).getTime().toString());
+        setActualDataToTextView(obj);
 
     }
 
@@ -117,7 +124,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     public void setListData(List data) {
 
         progressBarCo2Graphs.setVisibility(View.INVISIBLE);
-        createGraphs((List<Co2>)data);
+        createGraphs.addChartDataToGraph(lv,"Temperatures",graphsData,xAxis,data);
     }
 
 
@@ -134,6 +141,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
             this.airDates[0] = dates[0];
             this.airDates[1] = dates[1];
             setDatesToTextView();
+            xAxis = createGraphsData.setXAxisValues(dates);
             progressBarCo2Graphs.setVisibility(View.VISIBLE);
             lv.setAdapter(null);
             airPresenter.getAirBetweenData(dates[0], dates[1]);
@@ -146,6 +154,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
             {
                 this.airDates[0] = dates[0];
                 setDatesToTextView();
+                xAxis = createGraphsData.setXAxisValues(dates);
                 progressBarCo2Graphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
                 airPresenter.getAirBetweenData(dates[0], this.airDates[1]);
@@ -153,26 +162,16 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
         }
     }
 
-    private void setDatesToTextView() {
+    @Override
+    public void setDatesToTextView() {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
         startDate.setText(dateFormat.format(airDates[0]));
         endDate.setText(dateFormat.format(airDates[1]));
     }
 
-    private void setFirstAndLastDates() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, 1);
-        airDates[0] = cal.getTime();
-        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE)); // changed calendar to cal
-        airDates[1] = cal.getTime();
-    }
-
-    private void createGraphs(List<Co2> data) {
-        ArrayList<ChartItem> list = new ArrayList<>();
-        list.add(new LineChartItem(graphsData.generateDataLine("Co2",data), getContext()));
-        list.add(new BarChartItem(graphsData.generateDataBar("Co2",data), getContext()));
-        list.add(new PieChartItem(graphsData.generateDataPie("Co2",data), getContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(getContext(), list);
-        lv.setAdapter(cda);
+    @Override
+    public void setActualDataToTextView(Object obj) {
+        co2Value.setText(((Co2)obj).getReading().toString());
+        co2Date.setText(((Co2)obj).getDate().toString() + " at " +((Co2)obj).getTime().toString());
     }
 }

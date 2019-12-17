@@ -6,7 +6,6 @@ import com.example.winecellarapp.DataView;
 import com.example.winecellarapp.REST.DatePathFormatter;
 import com.example.winecellarapp.REST.Utils;
 import com.example.winecellarapp.model.Co2;
-import com.example.winecellarapp.model.Temperature;
 
 import java.util.Date;
 import java.util.List;

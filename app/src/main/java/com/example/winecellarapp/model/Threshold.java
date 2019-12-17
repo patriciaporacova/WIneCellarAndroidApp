@@ -3,6 +3,9 @@ package com.example.winecellarapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Model class for Threshold
+ */
 public class Threshold {
 
     @SerializedName("sensorType")
