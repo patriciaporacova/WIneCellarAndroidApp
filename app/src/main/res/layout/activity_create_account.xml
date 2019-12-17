@@ -15,63 +15,34 @@
         android:id="@+id/linearLayout">
 
         <EditText
+            style="@style/create_account"
             android:id="@+id/nameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:hint="Name"
-            android:gravity="center"
-            android:nextFocusDown="@+id/passwordEditText"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:nextFocusDown="@+id/passwordEditText"/>
 
         <EditText
+            style="@style/create_account"
             android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:hint="Email"
-            android:gravity="center"
             android:inputType="textEmailAddress"
             android:nextFocusDown="@+id/passwordEditText"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/colorPrimary"
-            android:textSize="20sp" />
+           />
 
         <EditText
+            style="@style/create_account"
             android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:hint="Password"
             android:inputType="textPassword"
             android:nextFocusDown="@+id/passwordEditText"
-            android:padding="10dp"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/colorPrimary"
-            android:textSize="20sp" />
+            />
 
         <EditText
+            style="@style/create_account"
             android:id="@+id/confirmPasswordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:hint="Confirm Password"
             android:inputType="textPassword"
             android:nextFocusDown="@+id/passwordEditText"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/colorPrimary"
-            android:textSize="20sp" />
+            />
 
 
         <Button
