@@ -14,19 +14,13 @@
 
     <EditText
         android:id="@+id/emailEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:textColorHint="@color/colorGray"
-        android:gravity="center"
-        android:backgroundTint="@color/colorAccent"
-        android:textColor="@color/colorAccent"
+        style="@style/App_EditTextStyle"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="24dp"
 
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
