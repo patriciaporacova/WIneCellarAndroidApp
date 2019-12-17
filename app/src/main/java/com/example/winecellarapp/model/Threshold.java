@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Threshold {
 
-    @SerializedName("date")
+    @SerializedName("sensorType")
     @Expose
     private String sensorType;
     @SerializedName("minValue")

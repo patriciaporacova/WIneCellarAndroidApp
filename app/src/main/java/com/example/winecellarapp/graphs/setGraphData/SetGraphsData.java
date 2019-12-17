@@ -216,8 +216,8 @@ public class SetGraphsData<T>
             }
 
         LineDataSet d1 = new LineDataSet(values1, label);
-        d1.setLineWidth(10.5f);
-        d1.setCircleRadius(10.5f);
+        d1.setLineWidth(5.5f);
+        d1.setCircleRadius(5.5f);
         d1.setHighLightColor(Color.rgb(0, 0, 0));
         d1.setHighlightLineWidth(3.0f);
         d1.setColor(ColorTemplate.MATERIAL_COLORS[0]);
