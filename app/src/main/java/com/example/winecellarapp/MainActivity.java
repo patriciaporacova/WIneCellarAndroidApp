@@ -8,7 +8,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +19,8 @@ import com.example.winecellarapp.fragments.HomeFragment;
 import com.example.winecellarapp.fragments.HumidityFragment;
 import com.example.winecellarapp.fragments.TemperatureFragment;
 import com.example.winecellarapp.login.LoginActivity;
+import com.example.winecellarapp.notification.StartService;
+import com.example.winecellarapp.notification.restarter.RestartServiceBroadcastReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,8 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        setContentView(R.layout.activity_main);
 
         drawer = findViewById(R.id.drawer_layout);
 
@@ -109,11 +111,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onDestroy()
     {
         super.onDestroy();
+        Log.i("MAINACT", "onDestroy!");
         //TODO-Patricia: add this to drawer logout
-        FirebaseAuth.getInstance().signOut();
+       /* FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
+        finish();*/
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            RestartServiceBroadcastReceiver.scheduleJob(getApplicationContext());
+        } else {
+            StartService bck = new StartService();
+            bck.startService(getApplicationContext());
+        }
     }
 }
