@@ -19,12 +19,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.winecellarapp.DataView;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
+import com.example.winecellarapp.graphs.CreateGraphs;
 import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
 import com.example.winecellarapp.graphs.graphs.BarChartItem;
 import com.example.winecellarapp.graphs.graphs.BubbleChartItem;
 import com.example.winecellarapp.graphs.graphs.ChartItem;
 import com.example.winecellarapp.graphs.graphs.LineChartItem;
 import com.example.winecellarapp.graphs.graphs.PieChartItem;
+import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.presenters.TemperaturePresenter;
@@ -42,36 +44,24 @@ import java.util.Date;
 import java.util.List;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-/**Fragment class for temperature*/
-public class TemperatureFragment extends Fragment implements DataView, ICalendarCallback {
+/**
+ * Created by Jakub Piga
+ * Fragment class for temperature*/
+public class TemperatureFragment extends Fragment implements DataView, ICalendarCallback,ISensorFragment {
 
     private View view;
     private TemperaturePresenter temperaturePresenter;
     private CalendarCallback calendarCallback;
     private Date[] dates;
+    private ArrayList<Integer> xAxis;
     private SetGraphsData graphsData;
+    private CreateGraphsData createGraphsData;
+    private CreateGraphs createGraphs;
     private ListView lv;
 
     private TextView tempValue, tempDate, startDate, endDate;
     private ProgressBar progressBarTemp, progressBarTempGraphs;
     private Button changePeriodBtn;
-
-
-
-   /* @BindView(R.id.temperature_text)
-    TextView tempValue;
-    @BindView(R.id.temperature_date)
-    TextView tempDate;
-    @BindView(R.id.start_date_temp)
-    TextView startDate;
-    @BindView(R.id.end_date_temp)
-    TextView endDate;
-    @BindView(R.id.progressBarTempValue)
-    ProgressBar progressBarTemp;
-    @BindView(R.id.progressBarTempGraphs)
-    ProgressBar progressBarTempGraphs;
-    @BindView(R.id.changePeriod)
-    Button changePeriodBtn;*/
 
 
     /**onCreateView for fragment*/
@@ -81,7 +71,6 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.temperature_fragment_layout, container, false);
 
-        //ButterKnife.bind(this, view);
 
         tempValue = view.findViewById(R.id.temperature_text);
         tempDate = view.findViewById(R.id.temperature_date);
@@ -95,6 +84,8 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
 
         //data for the graphs, set data type temperature
         graphsData = new SetGraphsData();
+        createGraphsData = new CreateGraphsData();
+        createGraphs = new CreateGraphs(getContext());
         graphsData.setAction(SetGraphsData.DATATYPE.TEMPERATURE);
         //list view for the graphs
         lv = view.findViewById(R.id.list_graphs_temperature);
@@ -105,7 +96,8 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
         temperaturePresenter.getTempSensorData();
 
         //set first and last date of the actual month and update text views and graphs
-        setFirstAndLastDates();
+        dates = createGraphsData.setFirstAndLastDates();
+        xAxis = createGraphsData.setXAxisValues(dates);
         setDatesToTextView();
 
         //getting latest temperature from database
@@ -142,8 +134,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     public void setData(Object obj)
     {
         progressBarTemp.setVisibility(View.INVISIBLE);
-        tempValue.setText(((Temperature)obj).getReading().toString());
-        tempDate.setText(((Temperature)obj).getDate().toString() + " at " +((Temperature)obj).getTime().toString());
+        setActualDataToTextView(obj);
     }
 
     /**Callback method from TemperaturePresenter
@@ -154,7 +145,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     public void setListData(List data)
     {
         progressBarTempGraphs.setVisibility(View.INVISIBLE);
-        createGraphs((List<Temperature>)data);
+        createGraphs.addChartDataToGraph(lv,"Temperatures",graphsData,xAxis,data);
 
     }
 
@@ -183,6 +174,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
             this.dates[0] = dates[0];
             this.dates[1] = dates[1];
             setDatesToTextView();
+            xAxis = createGraphsData.setXAxisValues(dates);
             progressBarTempGraphs.setVisibility(View.VISIBLE);
             lv.setAdapter(null);
             temperaturePresenter.getTempBetweenData(dates[0], dates[1]);
@@ -195,6 +187,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
             {
                 this.dates[0] = dates[0];
                 setDatesToTextView();
+                xAxis = createGraphsData.setXAxisValues(dates);
                 progressBarTempGraphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
                 temperaturePresenter.getTempBetweenData(dates[0], this.dates[1]);
@@ -203,34 +196,19 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     }
 
     /**Set new dates to text views*/
-    private void setDatesToTextView()
+    @Override
+    public void setDatesToTextView()
     {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
         startDate.setText(dateFormat.format(dates[0]));
         endDate.setText(dateFormat.format(dates[1]));
     }
 
-    /**Set first and last date in current month*/
-    private void setFirstAndLastDates()
+    @Override
+    public void setActualDataToTextView(Object obj)
     {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, 1);
-        dates[0] = cal.getTime();
-        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE)); // changed calendar to cal
-        dates[1] = cal.getTime();
+        tempValue.setText(((Temperature)obj).getReading().toString()+" °C");
+        tempDate.setText(((Temperature)obj).getDate().toString() + " at " +((Temperature)obj).getTime().toString());
     }
 
-    /**Method create new  list with graphs and sets adapter with new created graphs
-     *
-     * @param temperatures contains list with temperatures from which should be graphs created
-     */
-    private void createGraphs(List<Temperature> temperatures)
-    {
-        ArrayList<ChartItem> list = new ArrayList<>();
-        list.add(new LineChartItem(graphsData.generateDataLine("Temperature",temperatures), getContext()));
-        list.add(new BarChartItem(graphsData.generateDataBar("Temperatures",temperatures), getContext()));
-        list.add(new PieChartItem(graphsData.generateDataPie("Temperatures",temperatures), getContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(getContext(), list);
-        lv.setAdapter(cda);
-    }
 }

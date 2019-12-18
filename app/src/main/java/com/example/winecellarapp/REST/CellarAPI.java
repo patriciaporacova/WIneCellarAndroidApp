@@ -9,7 +9,9 @@ import com.example.winecellarapp.model.Threshold;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface CellarAPI {
@@ -36,11 +38,15 @@ public interface CellarAPI {
     Call<List<Co2>> getAverageAirBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date, @Path("endDate") DatePathFormatter endDate);
 
 
+    @POST("threshold/temp")
+    Call<Threshold> setTempThreshold (@Body Threshold threshold);
+
+
     @GET("sensordata/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
     @GET("threshold/{sensortype}/{minValue}/{maxValue}")
-    Call<Void> setHumidityThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
+    Call<Void> setThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
 
     @GET("getthresholds")
     Call<List<Threshold>> getThresholds();

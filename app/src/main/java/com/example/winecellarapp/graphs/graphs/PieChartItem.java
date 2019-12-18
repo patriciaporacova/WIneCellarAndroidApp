@@ -63,7 +63,7 @@ public class PieChartItem extends ChartItem {
         holder.chart.setCenterText(mCenterText);
         holder.chart.setCenterTextTypeface(mTf);
         holder.chart.setCenterTextSize(9f);
-        holder.chart.setUsePercentValues(true);
+        holder.chart.setUsePercentValues(false);
        // holder.chart.setExtraOffsets(5, 10, 50, 10);
         mChartData.setValueFormatter(new PercentFormatter());
         mChartData.setValueTypeface(mTf);

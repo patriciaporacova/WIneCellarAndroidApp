@@ -81,13 +81,13 @@
         android:layout_height="wrap_content"
         android:text="@string/change_period"
         android:layout_marginTop="10dp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/holo_green_light"
         app:layout_constraintEnd_toStartOf="@id/end_date_air"
         app:layout_constraintStart_toEndOf="@+id/start_date_Air"
         app:layout_constraintTop_toBottomOf="@+id/graphs_text_view_Air"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_air"
         app:rippleColor="@color/colorPrimary"
-        app:strokeColor="@android:color/black"
+        app:strokeColor="@android:color/holo_green_light"
         app:strokeWidth="2dp" />
 
     <TextView

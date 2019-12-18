@@ -2,7 +2,9 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent"> #ff69b4</color>
+
+    <color name="white"> #ffffff</color>
 
 
     <color name="colorCardTemperature">#CCF28C0F</color>
@@ -16,7 +18,9 @@
 
     <color name="humidity">#F2BB13</color>
     <color name="temperature">#F28C0F</color>
-    <color name="lightGrey">#109C9C9C</color>
+    <color name="lightGrey">#f4f5ed</color>
+
+    <color name="settings">#20008577</color>
 
 
 

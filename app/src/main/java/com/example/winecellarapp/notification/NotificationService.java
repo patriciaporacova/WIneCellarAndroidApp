@@ -23,6 +23,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by Jakub Piga
+ * Notification service which runs in the background even doe user destroy the app
+ */
 public class NotificationService extends Service {
     public static final String RESTART_INTENT = "com.example.notification.restarter";
     private static String TAG = "NotificationService";
@@ -31,18 +35,19 @@ public class NotificationService extends Service {
     private static Timer timer;
     private static TimerTask timerTask;
     private double tempMin;
-    private double tempMax;
     private double humMin;
-    private double humMax;
     private double airMin;
-    private double airMax;
     CreateNotification temperatureCreateNotification;
+
     public NotificationService()
     {
         super();
     }
 
 
+    /**
+     * On create for service
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -51,16 +56,22 @@ public class NotificationService extends Service {
         }
     }
 
+    /**
+     * On start command for service, called when it was killed by android and it is restarted
+     * @param intent of the application
+     * @param flags for running service
+     * @param startId of the service
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Log.d(TAG, "restarting NotificationService !!");
-
-        // it has been killed by Android and now it is restarted. We must make sure to have reinitialised everything
+        //Make sure to reinitialised everything
         if (intent == null) {
             StartService bck = new StartService();
             bck.startService(this);
         }
+
         startAPIObserver();
 
         // return start sticky so if it is killed by android, it will be restarted with Intent null
@@ -68,6 +79,11 @@ public class NotificationService extends Service {
     }
 
 
+    /**
+     * Binder of the service
+     * @param intent of the application
+     * @return IBinder in our case NULL
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -76,10 +92,8 @@ public class NotificationService extends Service {
 
 
     /**
-     * it starts the process in foreground. Normally this is done when screen goes off
-     * THIS IS REQUIRED IN ANDROID 8 :
-     * "The system allows apps to call Context.startForegroundService()
-     * even while the app is in the background.
+     * Starts the process in foreground.(When screen goes off)
+     * REQUIRED IN ANDROID 8:
      * However, the app must call that service's startForeground() method within five seconds
      * after the service is created."
      */
@@ -102,6 +116,10 @@ public class NotificationService extends Service {
     }
 
 
+    /**
+     * When application is closed onDestroy is called and it will restart service
+     * because android will kill every service with itself
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -114,8 +132,7 @@ public class NotificationService extends Service {
 
     /**
      * Called when the process is killed by Android
-     *
-     * @param rootIntent includes main android Intent
+     * @param rootIntent includes android Intent
      */
     @Override
     public void onTaskRemoved(Intent rootIntent) {
@@ -127,11 +144,14 @@ public class NotificationService extends Service {
         sendBroadcast(broadcastIntent);
     }
 
+    /**
+     * Create Timer for observing database with delay of 10000(every 10 sec)
+     *
+     */
     public void startAPIObserver() {
         timer = new Timer();
         getMaxAndMinValues();
         initializeAPIObserverTask();
-        Log.i(TAG, "Timer schedule");
         timer.schedule(timerTask, 10000, 10000); //
     }
 
@@ -139,7 +159,6 @@ public class NotificationService extends Service {
      * Gets temperature from database when schedule fires it
      */
     public void initializeAPIObserverTask() {
-        Log.i(TAG, "initialising TimerTask");
         timerTask = new TimerTask() {
             public void run() {
                 checkOutOfBoundsValues();
@@ -166,14 +185,20 @@ public class NotificationService extends Service {
             }
 
             @Override
-            public void onFailure(Call<List<Threshold>> call, Throwable t) {
-                createTempWarningNotification("Problem with controlling temperature",R.color.colorAccent);
+            public void onFailure(Call<List<Threshold>> call, Throwable t)
+            {
+                Log.i(TAG, t.getLocalizedMessage());
             }
 
         });
 
     }
 
+    /**
+     * Get maximum and minimum values from the database
+     * We are using just min values because database send always request if there
+     * is some "out of bound" value, so if minValue is not "out of bound" max value has to be
+     */
     private void getMaxAndMinValues() {
 
         Call<List<Threshold>> temperature = Utils.getApi().getThresholds();
@@ -183,13 +208,11 @@ public class NotificationService extends Service {
 
                 if (response.isSuccessful() && response.body() != null) {
                     tempMin = response.body().get(0).getMinValue();
-                    tempMax = response.body().get(0).getMaxValue();
                     humMin = response.body().get(1).getMinValue();
-                    humMax = response.body().get(1).getMaxValue();
                     airMin = response.body().get(2).getMinValue();
-                    airMax = response.body().get(2).getMaxValue();
 
-                } else
+                }
+                else
                     Log.i(TAG, response.message());
             }
 
@@ -202,6 +225,12 @@ public class NotificationService extends Service {
 
     }
 
+    /**
+     * Initializes CreateNotification if null
+     * Calls creates warning notification
+     * @param message
+     * @param color
+     */
     private void createTempWarningNotification(String message, int color)
     {
         if(temperatureCreateNotification ==  null)
@@ -210,6 +239,10 @@ public class NotificationService extends Service {
         startForeground(1234, temperatureCreateNotification.setNotification(this,"Temperature WARNING", message,R.drawable.ic_bell,true, color));
     }
 
+    /**
+     * Check which sensor is out of bound and create notification depends on it
+     * @param thresholds includes values which are out of bounds
+     */
     private void checkOutOfBoundSensor(List<Threshold> thresholds)
     {
         for (int i = 0; i < thresholds.size(); i++)
@@ -232,7 +265,7 @@ public class NotificationService extends Service {
                 }
                 else if(thresholds.get(i).getSensorType().equalsIgnoreCase("Humidity"))
                 {
-                    if (thresholds.get(i).getMinValue() < tempMin)
+                    if (thresholds.get(i).getMinValue() < humMin)
                         createTempWarningNotification("Humidity too LOW",R.color.lowTemperature);
                     else
                         createTempWarningNotification("Humidity too HIGH",R.color.colorRed);

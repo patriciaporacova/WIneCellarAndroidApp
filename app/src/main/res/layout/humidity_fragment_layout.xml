@@ -79,13 +79,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_period"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/humidity"
         app:layout_constraintBottom_toTopOf="@+id/list_graphs_humidity"
         app:layout_constraintEnd_toStartOf="@id/end_date_humidity"
         app:layout_constraintStart_toEndOf="@+id/start_date_humidity"
         app:layout_constraintTop_toBottomOf="@+id/graphs_text_view"
         app:rippleColor="@color/colorPrimary"
-        app:strokeColor="@color/colorAccent"
+        app:strokeColor="@color/humidity"
         app:strokeWidth="2dp" />
 
     <TextView

@@ -19,11 +19,13 @@ import com.example.winecellarapp.DataView;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
+import com.example.winecellarapp.graphs.CreateGraphs;
 import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
 import com.example.winecellarapp.graphs.graphs.BarChartItem;
 import com.example.winecellarapp.graphs.graphs.ChartItem;
 import com.example.winecellarapp.graphs.graphs.LineChartItem;
 import com.example.winecellarapp.graphs.graphs.PieChartItem;
+import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Humidity;
 import com.example.winecellarapp.presenters.HumidityPresenter;
@@ -36,7 +38,7 @@ import java.util.List;
 
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class HumidityFragment extends Fragment implements DataView, ICalendarCallback
+public class HumidityFragment extends Fragment implements DataView, ICalendarCallback, ISensorFragment
 {
 
 
@@ -46,6 +48,9 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
     private CalendarCallback calendarCallback;
     private Date[] dates;
     private SetGraphsData graphsData;
+    private CreateGraphsData createGraphsData;
+    private CreateGraphs createGraphs;
+    private ArrayList<Integer> xAxis;
     private ListView lv;
 
     private TextView humidityValue, humidityDate, startDate, endDate;
@@ -71,6 +76,8 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
 
         //data for the graphs, set data type humidity
         graphsData = new SetGraphsData();
+        createGraphsData = new CreateGraphsData();
+        createGraphs = new CreateGraphs(getContext());
         graphsData.setAction(SetGraphsData.DATATYPE.HUMIDITY);
         //list view for the graphs
         lv = view.findViewById(R.id.list_graphs_humidity);
@@ -81,8 +88,10 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
         humidityPresenter.getHumiditySensorData();
 
         //set first and last date of the actual month and update text views and graphs
-        setFirstAndLastDates();
+        dates = createGraphsData.setFirstAndLastDates();
+        xAxis = createGraphsData.setXAxisValues(dates);
         setDatesToTextView();
+
 
         //getting latest temperature from database
         humidityPresenter.getHumidityBetweenData(dates[0], dates[1]);
@@ -120,8 +129,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
     public void setData(Object obj)
     {
         progressBarHumidity.setVisibility(View.INVISIBLE);
-        humidityValue.setText(((Humidity) obj).getReading().toString());
-        humidityDate.setText(((Humidity) obj).getDate().toString() + " at " + ((Humidity) obj).getTime().toString());
+        setActualDataToTextView(obj);
     }
 
     /**
@@ -134,7 +142,8 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
     public void setListData(List data)
     {
         progressBarHumidityGraphs.setVisibility(View.INVISIBLE);
-        createGraphs((List<Humidity>) data);
+        createGraphs.addChartDataToGraph(lv,"Humidity",graphsData,xAxis,data);
+
 
     }
 
@@ -167,6 +176,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
             this.dates[0] = dates[0];
             this.dates[1] = dates[1];
             setDatesToTextView();
+            xAxis = createGraphsData.setXAxisValues(dates);
             progressBarHumidityGraphs.setVisibility(View.VISIBLE);
             lv.setAdapter(null);
             humidityPresenter.getHumidityBetweenData(dates[0], dates[1]);
@@ -178,6 +188,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
             {
                 this.dates[0] = dates[0];
                 setDatesToTextView();
+                xAxis = createGraphsData.setXAxisValues(dates);
                 progressBarHumidityGraphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
                 humidityPresenter.getHumidityBetweenData(dates[0], this.dates[1]);
@@ -188,37 +199,17 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
     /**
      * Set new dates to text views
      */
-    private void setDatesToTextView()
+    @Override
+    public void setDatesToTextView()
     {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
         startDate.setText(dateFormat.format(dates[0]));
         endDate.setText(dateFormat.format(dates[1]));
     }
 
-    /**
-     * Set first and last date in current month
-     */
-    private void setFirstAndLastDates()
-    {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, 1);
-        dates[0] = cal.getTime();
-        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE)); // changed calendar to cal
-        dates[1] = cal.getTime();
-    }
-
-    /**
-     * Method create new  list with graphs and sets adapter with new created graphs
-     *
-     * @param humidity contains list with humidity from which should be graphs created
-     */
-    private void createGraphs(List<Humidity> humidity)
-    {
-        ArrayList<ChartItem> list = new ArrayList<>();
-        list.add(new LineChartItem(graphsData.generateDataLine("Humidity", humidity), getContext()));
-        list.add(new BarChartItem(graphsData.generateDataBar("Humidity", humidity), getContext()));
-        list.add(new PieChartItem(graphsData.generateDataPie("Humidity", humidity), getContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(getContext(), list);
-        lv.setAdapter(cda);
+    @Override
+    public void setActualDataToTextView(Object obj) {
+        humidityValue.setText(((Humidity) obj).getReading().toString());
+        humidityDate.setText(((Humidity) obj).getDate().toString() + " at " + ((Humidity) obj).getTime().toString());
     }
 }

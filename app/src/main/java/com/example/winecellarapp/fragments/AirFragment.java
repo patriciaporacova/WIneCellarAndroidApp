@@ -19,11 +19,13 @@ import com.example.winecellarapp.DataView;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
+import com.example.winecellarapp.graphs.CreateGraphs;
 import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
 import com.example.winecellarapp.graphs.graphs.BarChartItem;
 import com.example.winecellarapp.graphs.graphs.ChartItem;
 import com.example.winecellarapp.graphs.graphs.LineChartItem;
 import com.example.winecellarapp.graphs.graphs.PieChartItem;
+import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Co2;
 import com.example.winecellarapp.model.Temperature;
@@ -37,21 +39,27 @@ import java.util.List;
 
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
-public class AirFragment extends Fragment implements DataView, ICalendarCallback {
+/**
+ * Created by Patricia Poracova
+ * Fragment class for co2 levels*/
+public class AirFragment extends Fragment implements DataView, ICalendarCallback,ISensorFragment {
 
 
-    //TODO-PATRICIA: Create same layout like temperature fragment(feel free to create your own design or copy paste temperature fragment and change variables and colors)
-    private View view;
+     private View view;
     private AirPresenter airPresenter;
     private CalendarCallback calendarCallback;
     private Date[] airDates;
+    private ArrayList<Integer> xAxis;
     private SetGraphsData graphsData;
+    private CreateGraphsData createGraphsData;
+    private CreateGraphs createGraphs;
     private ListView lv;
 
     private TextView co2Value, co2Date, startDate, endDate;
     private ProgressBar progressBarCo2, progressBarCo2Graphs;
     private Button changePeriodBtn;
 
+    /**onCreateView for fragment*/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,22 +76,32 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
 
         airDates = new Date[2];
 
+        //data for the graphs, set data type temperature
         graphsData = new SetGraphsData();
+        createGraphsData = new CreateGraphsData();
+        createGraphs = new CreateGraphs(getContext());
         graphsData.setAction(SetGraphsData.DATATYPE.AIR);
 
+        //list view for the graphs
         lv = view.findViewById(R.id.list_graphs_air);
 
+        //callback class for API calls
         airPresenter= new AirPresenter(this);
+        //getting latest temperature from database
         airPresenter.getAirSensorData();
 
-        setFirstAndLastDates();
+        //set first and last date of the actual month and update text views and graphs
+        airDates = createGraphsData.setFirstAndLastDates();
+        xAxis = createGraphsData.setXAxisValues(airDates);
         setDatesToTextView();
 
+        //getting latest temperature from database
         airPresenter.getAirBetweenData(airDates[0], airDates[1]);
 
+        //creating callback for calendar
         calendarCallback= new CalendarCallback(this, getContext());
 
-
+        //change button on click listener
         changePeriodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -103,30 +121,45 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     }
 
 
-
+    /**Callback method from AirPresenter
+     * It is called when API calls was successful and returned temperature value
+     * @param obj contains latest temperature value from database
+     */
     @Override
     public void setData(Object obj)
     {
         progressBarCo2.setVisibility(View.INVISIBLE);
-        co2Value.setText(((Co2)obj).getReading().toString());
-        co2Date.setText(((Co2)obj).getDate().toString() + " at " +((Co2)obj).getTime().toString());
+        setActualDataToTextView(obj);
 
     }
 
+    /**Callback method from AirPresenter
+     * It is called when API call was successful and returns list with temperatures
+     * @param data contains list with temperatures
+     */
     @Override
     public void setListData(List data) {
 
         progressBarCo2Graphs.setVisibility(View.INVISIBLE);
-        createGraphs((List<Co2>)data);
+        createGraphs.addChartDataToGraph(lv,"Temperatures",graphsData,xAxis,data);
     }
 
 
-
+    /**Callback method from AirPresenter
+     * This method is called when there was problem with API
+     * Method prints error message to user
+     * @param message contain error message
+     */
     @Override
     public void onErrorLoading(String message) {
         Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
     }
 
+    /**Callback method from CalendarCallback
+     * it is called when user pressed save button on calendar dialog window
+     * Method saves new dates and updates text views
+     * @param dates contains dates which user chose on calendar dialog window
+     */
     @Override
     public void setDates(Date[] dates) {
         if(dates[1] != null)
@@ -134,6 +167,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
             this.airDates[0] = dates[0];
             this.airDates[1] = dates[1];
             setDatesToTextView();
+            xAxis = createGraphsData.setXAxisValues(dates);
             progressBarCo2Graphs.setVisibility(View.VISIBLE);
             lv.setAdapter(null);
             airPresenter.getAirBetweenData(dates[0], dates[1]);
@@ -146,33 +180,24 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
             {
                 this.airDates[0] = dates[0];
                 setDatesToTextView();
+                xAxis = createGraphsData.setXAxisValues(dates);
                 progressBarCo2Graphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
                 airPresenter.getAirBetweenData(dates[0], this.airDates[1]);
             }
         }
     }
-
-    private void setDatesToTextView() {
+    /**Set new dates to text views*/
+    @Override
+    public void setDatesToTextView() {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
         startDate.setText(dateFormat.format(airDates[0]));
         endDate.setText(dateFormat.format(airDates[1]));
     }
 
-    private void setFirstAndLastDates() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, 1);
-        airDates[0] = cal.getTime();
-        cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE)); // changed calendar to cal
-        airDates[1] = cal.getTime();
-    }
-
-    private void createGraphs(List<Co2> data) {
-        ArrayList<ChartItem> list = new ArrayList<>();
-        list.add(new LineChartItem(graphsData.generateDataLine("Co2",data), getContext()));
-        list.add(new BarChartItem(graphsData.generateDataBar("Co2",data), getContext()));
-        list.add(new PieChartItem(graphsData.generateDataPie("Co2",data), getContext()));
-        ChartDataAdapter cda = new ChartDataAdapter(getContext(), list);
-        lv.setAdapter(cda);
+    @Override
+    public void setActualDataToTextView(Object obj) {
+        co2Value.setText(((Co2)obj).getReading().toString());
+        co2Date.setText(((Co2)obj).getDate().toString() + " at " +((Co2)obj).getTime().toString());
     }
 }

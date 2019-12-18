@@ -1,5 +1,6 @@
 package com.example.winecellarapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.winecellarapp.MainActivity;
 import com.example.winecellarapp.R;
+import com.example.winecellarapp.SettingsActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -52,7 +55,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AirFragment()).commit();
                 break;
             case R.id.cardNotifications:
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                startActivity(new Intent(getContext(), SettingsActivity.class));
                 break;
         }
 
