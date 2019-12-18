@@ -82,7 +82,7 @@ public class JobService extends android.app.job.JobService {
             public void run() {
                 unregisterReceiver(restartSensorServiceReceiver);
             }
-        }, 1000);
+        }, 10000);
 
         return false;
     }

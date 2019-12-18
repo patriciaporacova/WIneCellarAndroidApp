@@ -16,24 +16,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.winecellarapp.DataView;
+import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
 import com.example.winecellarapp.graphs.CreateGraphs;
-import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
-import com.example.winecellarapp.graphs.graphs.BarChartItem;
-import com.example.winecellarapp.graphs.graphs.ChartItem;
-import com.example.winecellarapp.graphs.graphs.LineChartItem;
-import com.example.winecellarapp.graphs.graphs.PieChartItem;
 import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Co2;
-import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.presenters.AirPresenter;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +52,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     private TextView co2Value, co2Date, startDate, endDate;
     private ProgressBar progressBarCo2, progressBarCo2Graphs;
     private Button changePeriodBtn;
-
+    private GlobalNotificationSharedPref notificationSharedPref;
     /**onCreateView for fragment*/
     @Nullable
     @Override
@@ -73,7 +67,9 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
         startDate = view.findViewById(R.id.start_date_Air);
         endDate = view.findViewById(R.id.end_date_air);
         changePeriodBtn = view.findViewById(R.id.changePeriodAir);
-
+        notificationSharedPref = new GlobalNotificationSharedPref(getContext());
+        if(notificationSharedPref.getSharedPreference().equalsIgnoreCase("CO2"))
+            notificationSharedPref.editSharedPreferences("eraseWarning");
         airDates = new Date[2];
 
         //data for the graphs, set data type temperature

@@ -19,6 +19,7 @@ import com.example.winecellarapp.fragments.HomeFragment;
 import com.example.winecellarapp.fragments.HumidityFragment;
 import com.example.winecellarapp.fragments.TemperatureFragment;
 import com.example.winecellarapp.login.LoginActivity;
+import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
 import com.example.winecellarapp.notification.StartService;
 import com.example.winecellarapp.notification.restarter.RestartServiceBroadcastReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,12 +29,15 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-
+    private StartService bck;
+    private GlobalNotificationSharedPref notificationSharedPref;
+   //private DataUpdateReceiver mCustomReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
+        //mCustomReceiver = new DataUpdateReceiver();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).commit();
         setTitle(null);
 
@@ -48,9 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -114,17 +120,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //unregisterReceiver(mCustomReceiver);
         Log.i("MAINACT", "onDestroy!");
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
+        notificationCheck();
+        restartService();
+    }
+
+    /**
+     * Check what notification is displayed and depends on it open fragment or change shared
+     * preference for default notification
+     */
+    private void notificationCheck()
+    {
+        String notif = notificationSharedPref.getSharedPreference();
+        if(notif.equalsIgnoreCase("humidity"))
+        {
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HumidityFragment()).commit();
+        }
+        else if(notif.equalsIgnoreCase("temperature"))
+        {
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TemperatureFragment()).commit();
+        }
+        else if(notif.equalsIgnoreCase("CO2"))
+        {
+            MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AirFragment()).commit();
+        }
+        else
+        {
+            notificationSharedPref.editSharedPreferences("default");
+        }
+    }
+
+    /**
+     * restart running service
+     */
+    private void restartService()
+    {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             RestartServiceBroadcastReceiver.scheduleJob(getApplicationContext());
         } else {
-            StartService bck = new StartService();
+            bck = new StartService();
             bck.startService(getApplicationContext());
         }
     }
+
+
+
 }

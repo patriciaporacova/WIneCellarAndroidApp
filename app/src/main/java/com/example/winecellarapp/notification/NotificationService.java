@@ -2,13 +2,16 @@ package com.example.winecellarapp.notification;
 
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.REST.Utils;
@@ -38,6 +41,7 @@ public class NotificationService extends Service {
     private double humMin;
     private double airMin;
     CreateNotification temperatureCreateNotification;
+    private GlobalNotificationSharedPref notificationSharedPref;
 
     public NotificationService()
     {
@@ -68,6 +72,7 @@ public class NotificationService extends Service {
         super.onStartCommand(intent, flags, startId);
         //Make sure to reinitialised everything
         if (intent == null) {
+            notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
             StartService bck = new StartService();
             bck.startService(this);
         }
@@ -102,11 +107,8 @@ public class NotificationService extends Service {
             Log.i(TAG, "restarting foreground");
             try
             {
-                CreateNotification createNotification = new CreateNotification();
-                startForeground(1234, createNotification.setNotification(this,
-                        "WineCellar service", "Controlling cellar conditions",
-                        R.drawable.ic_bell,false,R.color.ColorCardBgr));
-                Log.i(TAG, "restarting foreground successful");
+                notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
+               createDefaultNotification();
                 startAPIObserver();
             }
             catch (Exception e) {
@@ -161,6 +163,12 @@ public class NotificationService extends Service {
     public void initializeAPIObserverTask() {
         timerTask = new TimerTask() {
             public void run() {
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                if(preferences.getString("notification", "null").equalsIgnoreCase("eraseWarning"))
+                {
+                    createDefaultNotification();
+                }
                 checkOutOfBoundsValues();
             }
         };
@@ -231,12 +239,12 @@ public class NotificationService extends Service {
      * @param message
      * @param color
      */
-    private void createTempWarningNotification(String message, int color)
+    private void createWarningNotification(String message, int color)
     {
         if(temperatureCreateNotification ==  null)
             temperatureCreateNotification = new CreateNotification();
 
-        startForeground(1234, temperatureCreateNotification.setNotification(this,"Temperature WARNING", message,R.drawable.ic_bell,true, color));
+        startForeground(1234, temperatureCreateNotification.setNotification(this,"WARNING", message,R.drawable.ic_bell,true, color));
     }
 
     /**
@@ -251,24 +259,27 @@ public class NotificationService extends Service {
             {
                 if(thresholds.get(i).getSensorType().equalsIgnoreCase("CO2"))
                 {
+                    notificationSharedPref.editSharedPreferences("CO2");
                     if (thresholds.get(i).getMinValue() < airMin)
-                        createTempWarningNotification("CO2 too LOW",R.color.lowTemperature);
+                        createWarningNotification("CO2 too LOW",R.color.lowTemperature);
                     else
-                        createTempWarningNotification("CO2 too HIGH",R.color.colorRed);
+                        createWarningNotification("CO2 too HIGH",R.color.colorRed);
                 }
                 else if(thresholds.get(i).getSensorType().equalsIgnoreCase("Temperature"))
                 {
+                    notificationSharedPref.editSharedPreferences("Temperature");
                     if (thresholds.get(i).getMinValue() < tempMin)
-                        createTempWarningNotification("Temperature too LOW",R.color.lowTemperature);
+                        createWarningNotification("Temperature too LOW",R.color.lowTemperature);
                     else
-                        createTempWarningNotification("CO2 too HIGH",R.color.colorRed);
+                        createWarningNotification("CO2 too HIGH",R.color.colorRed);
                 }
                 else if(thresholds.get(i).getSensorType().equalsIgnoreCase("Humidity"))
                 {
+                    notificationSharedPref.editSharedPreferences("Humidity");
                     if (thresholds.get(i).getMinValue() < humMin)
-                        createTempWarningNotification("Humidity too LOW",R.color.lowTemperature);
+                        createWarningNotification("Humidity too LOW",R.color.lowTemperature);
                     else
-                        createTempWarningNotification("Humidity too HIGH",R.color.colorRed);
+                        createWarningNotification("Humidity too HIGH",R.color.colorRed);
                 }
                 else
                 {
@@ -276,6 +287,19 @@ public class NotificationService extends Service {
                 }
             }
         }
+    }
+
+    /**
+     * Create default notification for the service
+     */
+    private void createDefaultNotification()
+    {
+        CreateNotification createNotification = new CreateNotification();
+        startForeground(1234, createNotification.setNotification(this,
+                "WineCellar service", "Controlling cellar conditions",
+                R.drawable.ic_bell,false,R.color.ColorCardBgr));
+        Log.i(TAG, "restarting foreground successful");
+        notificationSharedPref.editSharedPreferences("default");
     }
 
 }

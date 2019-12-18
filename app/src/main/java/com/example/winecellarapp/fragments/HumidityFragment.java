@@ -16,15 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.winecellarapp.DataView;
+import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
 import com.example.winecellarapp.graphs.CreateGraphs;
-import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
-import com.example.winecellarapp.graphs.graphs.BarChartItem;
-import com.example.winecellarapp.graphs.graphs.ChartItem;
-import com.example.winecellarapp.graphs.graphs.LineChartItem;
-import com.example.winecellarapp.graphs.graphs.PieChartItem;
 import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Humidity;
@@ -32,7 +28,6 @@ import com.example.winecellarapp.presenters.HumidityPresenter;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +51,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
     private TextView humidityValue, humidityDate, startDate, endDate;
     private ProgressBar progressBarHumidity, progressBarHumidityGraphs;
     private Button changePeriodBtn;
-
+    private GlobalNotificationSharedPref notificationSharedPref;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -71,7 +66,9 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
         startDate = view.findViewById(R.id.start_date_humidity);
         endDate = view.findViewById(R.id.end_date_humidity);
         changePeriodBtn = view.findViewById(R.id.changePeriod);
-
+        notificationSharedPref = new GlobalNotificationSharedPref(getContext());
+        if(notificationSharedPref.getSharedPreference().equalsIgnoreCase("humidity"))
+            notificationSharedPref.editSharedPreferences("eraseWarning");
         dates = new Date[2];
 
         //data for the graphs, set data type humidity

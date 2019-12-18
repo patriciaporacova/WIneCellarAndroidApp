@@ -14,32 +14,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.winecellarapp.DataView;
+import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
 import com.example.winecellarapp.calendar.CalendarCallback;
 import com.example.winecellarapp.calendar.ICalendarCallback;
 import com.example.winecellarapp.graphs.CreateGraphs;
-import com.example.winecellarapp.graphs.adapters.ChartDataAdapter;
-import com.example.winecellarapp.graphs.graphs.BarChartItem;
-import com.example.winecellarapp.graphs.graphs.BubbleChartItem;
-import com.example.winecellarapp.graphs.graphs.ChartItem;
-import com.example.winecellarapp.graphs.graphs.LineChartItem;
-import com.example.winecellarapp.graphs.graphs.PieChartItem;
 import com.example.winecellarapp.graphs.setGraphData.CreateGraphsData;
 import com.example.winecellarapp.graphs.setGraphData.SetGraphsData;
 import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.presenters.TemperaturePresenter;
 import com.example.winecellarapp.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
@@ -62,7 +51,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     private TextView tempValue, tempDate, startDate, endDate;
     private ProgressBar progressBarTemp, progressBarTempGraphs;
     private Button changePeriodBtn;
-
+    private GlobalNotificationSharedPref notificationSharedPref;
 
     /**onCreateView for fragment*/
     @Nullable
@@ -79,7 +68,9 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
         startDate = view.findViewById(R.id.start_date_temp);
         endDate = view.findViewById(R.id.end_date_temp);
         changePeriodBtn = view.findViewById(R.id.changePeriod);
-
+        notificationSharedPref = new GlobalNotificationSharedPref(getContext());
+        if(notificationSharedPref.getSharedPreference().equalsIgnoreCase("temperature"))
+            notificationSharedPref.editSharedPreferences("eraseWarning");
         dates = new Date[2];
 
         //data for the graphs, set data type temperature
