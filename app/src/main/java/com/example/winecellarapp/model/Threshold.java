@@ -13,10 +13,16 @@ public class Threshold {
     private String sensorType;
     @SerializedName("minValue")
     @Expose
-    private Double minValue;
+    private double minValue;
     @SerializedName("maxValue")
     @Expose
-    private Double maxValue;
+    private double maxValue;
+
+    public Threshold(String sensorType, double minValue, double maxValue) {
+        this.sensorType = sensorType;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+    }
 
     public void setSensorType(String sensorType) {
         this.sensorType = sensorType;
