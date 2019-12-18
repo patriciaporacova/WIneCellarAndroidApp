@@ -92,6 +92,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
         xAxis = createGraphsData.setXAxisValues(dates);
         setDatesToTextView();
 
+
         //getting latest temperature from database
         humidityPresenter.getHumidityBetweenData(dates[0], dates[1]);
 
@@ -128,6 +129,7 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
     public void setData(Object obj)
     {
         progressBarHumidity.setVisibility(View.INVISIBLE);
+        setActualDataToTextView(obj);
     }
 
     /**

@@ -16,35 +16,76 @@
 
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
+    <PreferenceCategory app:title="Temperature" app:iconSpaceReserved="false">
 
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+            app:key="lowest_temp"
+            app:title="Lowest accetable level"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false"
+            />
+        <EditTextPreference
+            app:key="highest_temp"
+            app:title="Highest accetable level"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false"
+            />
 
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Humidity" app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            app:key="lowest_humidity"
+            app:title="Lowest accetable level"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false"
+            />
+        <EditTextPreference
+            app:key="highest_humidity"
+            app:title="Highest accetable level"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="Co2 levels" app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            app:key="lowest_air"
+            app:title="Lowest accetable level"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false"
+            />
+        <EditTextPreference
+            app:key="highest_air"
+            app:title="Highest accetable level"
+            app:useSimpleSummaryProvider="true"
+            app:iconSpaceReserved="false"
+            />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="Notifications" app:iconSpaceReserved="false" >
 
         <SwitchPreferenceCompat
             app:key="sync"
-            app:title="@string/sync_title" />
+            app:title="Allow notification" />
 
         <SwitchPreferenceCompat
             app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            app:key="ringtone"
+            app:summaryOn="It will right when notification comes"
+            app:title="Ringtone" />
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="vibrate"
+            app:summaryOn="It will vibrate when notification comes"
+            app:title="Vibration" />
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="banner"
+            app:summaryOn="You will see banner when notification comes"
+            app:title="Banner" />
 
     </PreferenceCategory>
 

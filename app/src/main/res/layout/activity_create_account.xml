@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/action_sign_in"
-            android:background="@color/colorAccent"
+            android:background="@color/white"
             android:layout_marginTop="15dp"
             android:textColor="@color/colorPrimary" />
 
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="15sp"
             android:text="Already have an account? Log in here!"
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Account"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
         android:layout_above="@+id/linearLayout"

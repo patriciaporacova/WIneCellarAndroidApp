@@ -134,8 +134,6 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     public void setData(Object obj)
     {
         progressBarTemp.setVisibility(View.INVISIBLE);
-        tempValue.setText(((Temperature)obj).getReading().toString()+ " °C");
-        tempDate.setText(((Temperature)obj).getDate().toString() + " at " +((Temperature)obj).getTime().toString());
         setActualDataToTextView(obj);
     }
 
@@ -209,7 +207,7 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
     @Override
     public void setActualDataToTextView(Object obj)
     {
-        tempValue.setText(((Temperature)obj).getReading().toString());
+        tempValue.setText(((Temperature)obj).getReading().toString()+" °C");
         tempDate.setText(((Temperature)obj).getDate().toString() + " at " +((Temperature)obj).getTime().toString());
     }
 

@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setContentView(R.layout.activity_main);
 
         drawer = findViewById(R.id.drawer_layout);
 
