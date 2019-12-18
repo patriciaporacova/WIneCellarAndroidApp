@@ -39,11 +39,13 @@ import java.util.List;
 
 import ru.slybeaver.slycalendarview.SlyCalendarDialog;
 
+/**
+ * Created by Patricia Poracova
+ * Fragment class for co2 levels*/
 public class AirFragment extends Fragment implements DataView, ICalendarCallback,ISensorFragment {
 
 
-    //TODO-PATRICIA: Create same layout like temperature fragment(feel free to create your own design or copy paste temperature fragment and change variables and colors)
-    private View view;
+     private View view;
     private AirPresenter airPresenter;
     private CalendarCallback calendarCallback;
     private Date[] airDates;
@@ -57,6 +59,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     private ProgressBar progressBarCo2, progressBarCo2Graphs;
     private Button changePeriodBtn;
 
+    /**onCreateView for fragment*/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,25 +76,32 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
 
         airDates = new Date[2];
 
+        //data for the graphs, set data type temperature
         graphsData = new SetGraphsData();
         createGraphsData = new CreateGraphsData();
         createGraphs = new CreateGraphs(getContext());
         graphsData.setAction(SetGraphsData.DATATYPE.AIR);
 
+        //list view for the graphs
         lv = view.findViewById(R.id.list_graphs_air);
 
+        //callback class for API calls
         airPresenter= new AirPresenter(this);
+        //getting latest temperature from database
         airPresenter.getAirSensorData();
 
+        //set first and last date of the actual month and update text views and graphs
         airDates = createGraphsData.setFirstAndLastDates();
         xAxis = createGraphsData.setXAxisValues(airDates);
         setDatesToTextView();
 
+        //getting latest temperature from database
         airPresenter.getAirBetweenData(airDates[0], airDates[1]);
 
+        //creating callback for calendar
         calendarCallback= new CalendarCallback(this, getContext());
 
-
+        //change button on click listener
         changePeriodBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -111,7 +121,10 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     }
 
 
-
+    /**Callback method from AirPresenter
+     * It is called when API calls was successful and returned temperature value
+     * @param obj contains latest temperature value from database
+     */
     @Override
     public void setData(Object obj)
     {
@@ -120,6 +133,10 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
 
     }
 
+    /**Callback method from AirPresenter
+     * It is called when API call was successful and returns list with temperatures
+     * @param data contains list with temperatures
+     */
     @Override
     public void setListData(List data) {
 
@@ -128,12 +145,21 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
     }
 
 
-
+    /**Callback method from AirPresenter
+     * This method is called when there was problem with API
+     * Method prints error message to user
+     * @param message contain error message
+     */
     @Override
     public void onErrorLoading(String message) {
         Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
     }
 
+    /**Callback method from CalendarCallback
+     * it is called when user pressed save button on calendar dialog window
+     * Method saves new dates and updates text views
+     * @param dates contains dates which user chose on calendar dialog window
+     */
     @Override
     public void setDates(Date[] dates) {
         if(dates[1] != null)
@@ -161,7 +187,7 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
             }
         }
     }
-
+    /**Set new dates to text views*/
     @Override
     public void setDatesToTextView() {
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());

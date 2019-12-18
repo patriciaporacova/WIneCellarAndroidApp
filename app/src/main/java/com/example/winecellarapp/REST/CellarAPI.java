@@ -38,14 +38,15 @@ public interface CellarAPI {
     Call<List<Co2>> getAverageAirBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date, @Path("endDate") DatePathFormatter endDate);
 
 
+    @POST("threshold/temp")
+    Call<Threshold> setTempThreshold (@Body Threshold threshold);
+
+
     @GET("sensordata/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
     @GET("threshold/{sensortype}/{minValue}/{maxValue}")
-    Call<Void> setHumidityThresholds (@Path("sensortype") String sensorType,@Path("minValue") Double minValue, @Path("maxValue") Double maxValue);
-
-    @POST ("newTreshold")
-    Call<Threshold> createTreshhold(@Body Threshold threshold);
+    Call<Void> setThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
 
     @GET("getthresholds")
     Call<List<Threshold>> getThresholds();

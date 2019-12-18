@@ -14,6 +14,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by Eric Volmer
+ * Class sending API calls and sending response to view trough the DataView interface
+ */
 public class HumidityPresenter
 {
     private DataView view;
@@ -23,6 +27,9 @@ public class HumidityPresenter
         this.view = view;
     }
 
+    /**
+     * API call for getting last measured humidity levels from temperature sensor
+     */
     public void getHumiditySensorData()
     {
         Call<Humidity> humidity = Utils.getApi().getLastHumidity("Humidity");
@@ -48,6 +55,11 @@ public class HumidityPresenter
         });
     }
 
+    /**
+     * API call for getting average day humidity between dates
+     * @param start contains start Date
+     * @param end contains end Date
+     */
     public void getHumidityBetweenData(Date start, Date end)
     {
         DatePathFormatter startFormated = new DatePathFormatter(start);

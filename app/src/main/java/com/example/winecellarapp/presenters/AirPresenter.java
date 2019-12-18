@@ -14,6 +14,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by Patricia Poracova
+ * Class sending API calls and sending response to view trough the DataView interface
+ */
 public class AirPresenter
 {
    private DataView view;
@@ -21,6 +25,9 @@ public class AirPresenter
    public AirPresenter(DataView view)
    {this.view=view;}
 
+    /**
+     * API call for getting last measured co2 levels from temperature sensor
+     */
    public void getAirSensorData()
    {
        Call<Co2> air = Utils.getApi().getLastAir("co2");
@@ -45,6 +52,11 @@ public class AirPresenter
        );
    }
 
+    /**
+     * API call for getting average day co2 levels between dates
+     * @param start contains start Date
+     * @param end contains end Date
+     */
     public void getAirBetweenData(Date start, Date end)
     {
         DatePathFormatter startFormated = new DatePathFormatter(start);

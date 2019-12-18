@@ -16,83 +16,59 @@ import androidx.preference.PreferenceManager;
 import com.example.winecellarapp.REST.Utils;
 import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.model.Threshold;
+import com.example.winecellarapp.presenters.SettingsPresenter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by Patricia Poracova
+ * class responsible for setting thresholds and notification preferences*/
 public class SettingsActivity extends AppCompatActivity {
-    //SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
     SharedPreferences prefs;
+    SettingsPresenter presenter;
+    Threshold threshold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
+        /**get current preferences*/
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        presenter = new SettingsPresenter();
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.settings, new SettingsFragment())
                 .commit();
-
     }
 
-    SharedPreferences.OnSharedPreferenceChangeListener myPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener(){
+    /**setListener for changes to sharedPreferences, every change triggers new API call to post new threshold levels*/
+    SharedPreferences.OnSharedPreferenceChangeListener myPrefListner = new SharedPreferences.OnSharedPreferenceChangeListener() {
         public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
             Log.d("changePref", "The key '" + key + "' was changed");
-            switch (key){
-            case "lowest_temp":
+            switch (key) {
+                case ("lowest_temp"):
+                case ("highest_temp"):
 
-               double lowD=Double.parseDouble(prefs.getString("lowest_temp", null ));
-               double highD=Double.parseDouble(prefs.getString("highest_temp", null));
+                    double lowT = Double.parseDouble(prefs.getString("lowest_temp", null));
+                    double highT = Double.parseDouble(prefs.getString("highest_temp", null));
+                    threshold= new Threshold("temperature", lowT, highT);
+                    presenter.setTempThreshold(threshold);
+                    break;
+                case ("lowest_humidity"):
+                case ("highest_humidity"):
 
-                Threshold threshold= new Threshold("temperature", lowD, highD);
-
-                Log.d("newValues", "New low '" + lowD + "' new high" +highD);
-
-                Call<Threshold> changeTreshold= Utils.getApi().createTreshhold(threshold);
-                changeTreshold.enqueue(new Callback<Threshold>() {
-                    @Override
-                    public void onResponse(Call<Threshold> call, Response<Threshold> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Threshold> call, Throwable t) {
-
-                    }
-                });
-
-
-                /*Call<Void> humidityTreshold = Utils.getApi().setHumidityThresholds("temperature",lowD, highD);
-                humidityTreshold.enqueue(new Callback<Void>()
-                {
-                    @Override
-                    public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response)
-                    {
-                        Log.d("newValues", "New low '" + lowD + "' new high" +highD);
-
-                        *//*if (response.isSuccessful() && response.body() != null) {
-                            view.setData(response.body());
-
-                        } else {
-                            view.onErrorLoading(response.message());
-                        }*//*
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        //view.onErrorLoading(t.getLocalizedMessage());
-                    }
-
-                });*/
+                    double lowH = Double.parseDouble(prefs.getString("lowest_humidity", null));
+                    double highH = Double.parseDouble(prefs.getString("highest_humidity", null));
+                    presenter.setSensorThresholds("humidity", lowH, highH);
+                    break;
             }
         }
     };
-
-    // PreferenceManager.getDefaultSharedPreferences(this)
 
     @Override
     protected void onResume() {
@@ -100,21 +76,16 @@ public class SettingsActivity extends AppCompatActivity {
         prefs.registerOnSharedPreferenceChangeListener(myPrefListner);
     }
 
-
-
     @Override
     protected void onPause() {
         super.onPause();
         prefs.unregisterOnSharedPreferenceChangeListener(myPrefListner);
-
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-
         }
     }
 
