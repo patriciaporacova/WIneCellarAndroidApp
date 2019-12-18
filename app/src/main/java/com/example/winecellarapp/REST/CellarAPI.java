@@ -44,8 +44,8 @@ public interface CellarAPI {
     @GET("threshold/{sensortype}/{minValue}/{maxValue}")
     Call<Void> setHumidityThresholds (@Path("sensortype") String sensorType,@Path("minValue") Double minValue, @Path("maxValue") Double maxValue);
 
-    @POST
-    Threshold createTreshhold(@Body Threshold threshold);
+    @POST ("newTreshold")
+    Call<Threshold> createTreshhold(@Body Threshold threshold);
 
     @GET("getthresholds")
     Call<List<Threshold>> getThresholds();

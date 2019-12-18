@@ -51,8 +51,19 @@ public class SettingsActivity extends AppCompatActivity {
                 Threshold threshold= new Threshold("temperature", lowD, highD);
 
                 Log.d("newValues", "New low '" + lowD + "' new high" +highD);
-                
 
+                Call<Threshold> changeTreshold= Utils.getApi().createTreshhold(threshold);
+                changeTreshold.enqueue(new Callback<Threshold>() {
+                    @Override
+                    public void onResponse(Call<Threshold> call, Response<Threshold> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Threshold> call, Throwable t) {
+
+                    }
+                });
 
 
                 /*Call<Void> humidityTreshold = Utils.getApi().setHumidityThresholds("temperature",lowD, highD);
