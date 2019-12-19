@@ -1,4 +1,4 @@
-package com.example.winecellarapp;
+package com.example.winecellarapp.views;
 
 import java.util.List;
 

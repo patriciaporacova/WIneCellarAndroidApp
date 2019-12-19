@@ -1,15 +1,12 @@
 package com.example.winecellarapp.presenters;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
-import com.example.winecellarapp.DataView;
+import com.example.winecellarapp.views.DataView;
 import com.example.winecellarapp.REST.DatePathFormatter;
 import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.REST.Utils;
 
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 

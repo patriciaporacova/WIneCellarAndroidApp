@@ -15,7 +15,7 @@ import android.os.Vibrator;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
-import com.example.winecellarapp.MainActivity;
+import com.example.winecellarapp.views.MainActivity;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 

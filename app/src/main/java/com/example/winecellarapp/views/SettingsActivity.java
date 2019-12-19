@@ -1,4 +1,4 @@
-package com.example.winecellarapp;
+package com.example.winecellarapp.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import com.example.winecellarapp.R;
 import com.example.winecellarapp.REST.Utils;
 import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.model.Threshold;
