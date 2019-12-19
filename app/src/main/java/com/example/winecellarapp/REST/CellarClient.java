@@ -8,14 +8,22 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Created by Patricia Poracova
+ * Connection client with the server through the ngrok(Free provider for forwarding localhost request)
+ */
 public class CellarClient {
 
     //TODO: add base URL
-   private static final String BASE_URL = "      https://c4634c38.ngrok.io/api/";    //you need to get your own ngrok instance ...check tutorial https://markzfilter.com/connect-ios-android-app-local-host-server/
+   private static final String BASE_URL = "http://2b5d0170.ngrok.io/testrest_war_exploded/api/";    //you need to get your own ngrok instance ...check tutorial https://markzfilter.com/connect-ios-android-app-local-host-server/
 
 
-
-    public static Retrofit getCellarClient() {
+    /**
+     * Get cellar client
+     * @return Retrofit client
+     */
+    public static Retrofit getCellarClient()
+    {
 
         return new Retrofit.Builder().baseUrl(BASE_URL)
                 .client(provideOkHttp())
@@ -23,11 +31,21 @@ public class CellarClient {
                 .build();
     }
 
-    private static Interceptor provideLoggingInterceptor() {
+    /**
+     * Create new logging interceptor
+     * @return new Interceptor
+     */
+    private static Interceptor provideLoggingInterceptor()
+    {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 
-    private static OkHttpClient provideOkHttp() {
+    /**
+     * Return new Http client with all necessary parameters
+     * @return new HTTP client
+     */
+    private static OkHttpClient provideOkHttp()
+    {
         return new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)

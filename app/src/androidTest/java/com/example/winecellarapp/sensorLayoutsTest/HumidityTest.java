@@ -1,4 +1,4 @@
-package com.example.winecellarapp.login;
+package com.example.winecellarapp.sensorLayoutsTest;
 
 
 import android.view.View;

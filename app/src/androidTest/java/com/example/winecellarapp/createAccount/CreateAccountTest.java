@@ -1,10 +1,11 @@
-package com.example.winecellarapp.login;
+package com.example.winecellarapp.createAccount;
 
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.winecellarapp.R;
+import com.example.winecellarapp.login.CreateAccount;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -27,7 +27,7 @@ public class CreateGraphsData
 
     /**
      * FIll up ArrayList with values needed for xAxis labels
-     * @param dates with start and end date of the chosen values
+     * @param dates with start and end date of the chosen values(always 2 values)
      * @return List of the Integers with labels for graphs
      */
     public ArrayList<Integer> setXAxisValues(Date[] dates)
