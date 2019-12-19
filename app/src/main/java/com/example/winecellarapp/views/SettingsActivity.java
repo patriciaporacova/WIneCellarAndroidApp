@@ -20,6 +20,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import com.example.winecellarapp.GetSetSharedPreferences;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.REST.Utils;
 import com.example.winecellarapp.model.Temperature;
