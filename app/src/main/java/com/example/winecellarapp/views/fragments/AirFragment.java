@@ -193,6 +193,10 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
         endDate.setText(dateFormat.format(airDates[1]));
     }
 
+    /**
+     * Set data to text view
+     * @param obj with object to set text view
+     */
     @Override
     public void setActualDataToTextView(Object obj) {
         co2Value.setText(((Co2)obj).getReading().toString());

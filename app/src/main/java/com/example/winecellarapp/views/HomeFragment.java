@@ -16,6 +16,9 @@ import com.example.winecellarapp.views.fragments.AirFragment;
 import com.example.winecellarapp.views.fragments.HumidityFragment;
 import com.example.winecellarapp.views.fragments.TemperatureFragment;
 
+/**
+ * Home fragment with all buttons
+ */
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
@@ -39,6 +42,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    /**
+     * Click on the buttons
+     * @param v actual View
+     */
     @Override
     public void onClick(View v) {
 

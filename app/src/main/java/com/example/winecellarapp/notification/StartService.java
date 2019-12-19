@@ -36,20 +36,5 @@ public class StartService
             context.startService(serviceIntent);
         Log.d("NotificationService", "CreateNotification NotificationService started");
     }
-
-    //TODO:UNTESTED METHOD
-    /**
-     * Stop service
-     * @param context
-     */
-    public void stopService(Context context)
-    {
-
-        if (context == null)
-            return;
-        setIntent(context);
-        context.stopService(serviceIntent);
-        Log.d("NotificationService", "CreateNotification Service ended");
-    }
 }
 

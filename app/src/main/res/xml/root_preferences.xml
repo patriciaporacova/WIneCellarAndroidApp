@@ -20,7 +20,7 @@
 
         <EditTextPreference
             app:key="lowest_temp"
-            app:title="Lowest accetable level"
+            app:title="Lowest acceptable level"
             app:defaultValue="10"
             app:useSimpleSummaryProvider="true"
             app:iconSpaceReserved="false"
@@ -28,7 +28,7 @@
         <EditTextPreference
             app:key="highest_temp"
             app:defaultValue="15"
-            app:title="Highest accetable level"
+            app:title="Highest acceptable level"
             app:useSimpleSummaryProvider="true"
             app:iconSpaceReserved="false"
             />
@@ -38,14 +38,14 @@
         <EditTextPreference
             app:key="lowest_humidity"
             app:defaultValue="15"
-            app:title="Lowest accetable level"
+            app:title="Lowest acceptable level"
             app:useSimpleSummaryProvider="true"
             app:iconSpaceReserved="false"
             />
         <EditTextPreference
             app:key="highest_humidity"
             app:defaultValue="70"
-            app:title="Highest accetable level"
+            app:title="Highest acceptable level"
             app:useSimpleSummaryProvider="true"
             app:iconSpaceReserved="false"
             />
@@ -56,14 +56,14 @@
         <EditTextPreference
             app:key="lowest_air"
             app:defaultValue="200"
-            app:title="Lowest accetable level"
+            app:title="Lowest acceptable level"
             app:useSimpleSummaryProvider="true"
             app:iconSpaceReserved="false"
             />
         <EditTextPreference
             app:key="highest_air"
-            app:defaultValue="15000"
-            app:title="Highest accetable level"
+            app:defaultValue="1500"
+            app:title="Highest acceptable level"
             app:useSimpleSummaryProvider="true"
             app:iconSpaceReserved="false"
             />

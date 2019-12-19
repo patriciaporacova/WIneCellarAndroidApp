@@ -21,6 +21,10 @@ public class CreateGraphs<T>
 {
     private Context context;
 
+    /**
+     * COnstructor for the class
+     * @param context root context of the app
+     */
     public CreateGraphs(Context context)
     {
         this.context = context;

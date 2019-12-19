@@ -68,6 +68,10 @@ public class RestartServiceBroadcastReceiver extends BroadcastReceiver {
         jobScheduler.schedule(jobInfo);
     }
 
+    /**
+     * Register receiver for restarting service
+     * @param context includes main context
+     */
     private void registerRestarterReceiver(final Context context) {
 
         // the context can be null if app just installed and this is called from restartsensorservice

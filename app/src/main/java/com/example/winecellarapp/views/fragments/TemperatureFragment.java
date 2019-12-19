@@ -196,6 +196,10 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
         endDate.setText(dateFormat.format(dates[1]));
     }
 
+    /**
+     * Set data to text view
+     * @param obj with object to set text view
+     */
     @Override
     public void setActualDataToTextView(Object obj)
     {

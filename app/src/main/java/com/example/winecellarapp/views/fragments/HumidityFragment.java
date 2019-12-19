@@ -206,6 +206,10 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
         endDate.setText(dateFormat.format(dates[1]));
     }
 
+    /**
+     * Set data to text view
+     * @param obj with object to set text view
+     */
     @Override
     public void setActualDataToTextView(Object obj) {
         humidityValue.setText(((Humidity) obj).getReading().toString());

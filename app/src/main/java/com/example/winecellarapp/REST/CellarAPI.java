@@ -14,6 +14,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * rest api CALLS for getting data from database
+ */
 public interface CellarAPI {
 
     

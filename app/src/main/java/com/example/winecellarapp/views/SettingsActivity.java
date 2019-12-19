@@ -139,6 +139,10 @@ public class SettingsActivity extends AppCompatActivity {
         prefs.unregisterOnSharedPreferenceChangeListener(myPrefListner);
     }
 
+    /**
+     * Create preference
+     * setOnBindEditTextListener is allowing just numeric keyboard
+     */
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey)
@@ -167,6 +171,10 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Create temporary shared reference if it is necessary to retrieves previous values
+     * if call to change thresholds was unsuccessful
+     */
     private void createTempSharedPreferences()
     {
         getSetSharedPreferences.editSharedPreferences("lowest_temp_temp"
@@ -184,6 +192,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Set shared references back to previous values
+     * @param nameOfTheReference includes name of the reference
+     */
     private void setBackSharedPreferences(String nameOfTheReference)
     {
 
@@ -193,6 +205,9 @@ public class SettingsActivity extends AppCompatActivity {
                 ,getSetSharedPreferences.getSharedPreferences("highest_"+nameOfTheReference+"_temp"));
     }
 
+    /**
+     * Check after switches states are changes if service should be destroyed or created
+     */
     private void checkStopOrStartService()
     {
         if(getSetSharedPreferences.getBooleanSharedPreferences("air") == false &&
