@@ -26,8 +26,6 @@ public interface CellarAPI {
     @GET("last/{sensortype}")
     Call<Co2> getLastAir(@Path("sensortype") String sensorType);
 
-
-
     @GET("average/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getAverageTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
@@ -37,23 +35,18 @@ public interface CellarAPI {
     @GET("average/{sensortype}/{startDate}/{endDate}")
     Call<List<Co2>> getAverageAirBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date, @Path("endDate") DatePathFormatter endDate);
 
-
     @POST("threshold/temp")
     Call<Threshold> setTempThreshold (@Body Threshold threshold);
 
+    @POST("threshold/humid")
+    Call<Threshold> setHumidityThreshold (@Body Threshold threshold);
 
-    @GET("sensordata/{sensortype}/{startDate}/{endDate}")
-    Call<List<Temperature>> getTemperatureBetween(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
-
-    @GET("threshold/{sensortype}/{minValue}/{maxValue}")
-    Call<Void> setThresholds (@Path("sensortype") String sensorType,@Path("minValue") double minValue, @Path("maxValue") double maxValue);
+    @POST("threshold/co2")
+    Call<Threshold> setAirThreshold (@Body Threshold threshold);
 
     @GET("getthresholds")
     Call<List<Threshold>> getThresholds();
 
-    @GET("average/{sensortype}/{startDate}/{endDate}")
-    Call<List<Temperature>> getAverageSensorFromDates(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
-    
     @GET("minmax/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getMinAndMaxFromDates(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 

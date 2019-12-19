@@ -44,6 +44,7 @@ public class StartService
      */
     public void stopService(Context context)
     {
+
         if (context == null)
             return;
         setIntent(context);

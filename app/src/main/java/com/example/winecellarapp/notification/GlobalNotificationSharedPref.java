@@ -42,4 +42,35 @@ public class GlobalNotificationSharedPref
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("notification", "nothing");
     }
+
+    public void editServiceSharedPreferences(String value)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("notiService", value);
+        editor.commit();
+    }
+
+
+    public String getServiceSharedPreference()
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("notiService", "nothing");
+    }
+
+    public String getShowNotificationForPreference(String key)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, "error");
+    }
+
+    public void setShowNotificationForPreference(String key, String value)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("notiService", value);
+        editor.commit();
+    }
+
+
 }

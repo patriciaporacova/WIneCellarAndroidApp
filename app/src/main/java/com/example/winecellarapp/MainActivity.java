@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
+        if(notificationSharedPref.getServiceSharedPreference().equalsIgnoreCase("nothing"))
+            notificationSharedPref.editServiceSharedPreferences("off");
         //mCustomReceiver = new DataUpdateReceiver();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new HomeFragment()).commit();
         setTitle(null);
@@ -162,11 +165,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void restartService()
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            RestartServiceBroadcastReceiver.scheduleJob(getApplicationContext());
-        } else {
-            bck = new StartService();
-            bck.startService(getApplicationContext());
+        if(notificationSharedPref.getServiceSharedPreference().equalsIgnoreCase("on"))
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            {
+                RestartServiceBroadcastReceiver.scheduleJob(getApplicationContext());
+            } else {
+                bck = new StartService();
+                bck.startService(getApplicationContext());
+            }
         }
     }
 

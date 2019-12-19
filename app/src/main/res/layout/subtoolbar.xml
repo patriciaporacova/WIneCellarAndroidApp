@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
         android:padding="10dp"
-app:labelVisibilityMode="selected"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/subtoolbar_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

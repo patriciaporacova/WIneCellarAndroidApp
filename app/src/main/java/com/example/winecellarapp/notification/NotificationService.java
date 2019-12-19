@@ -34,6 +34,7 @@ public class NotificationService extends Service {
     public static final String RESTART_INTENT = "com.example.notification.restarter";
     private static String TAG = "NotificationService";
 
+    public static NotificationService notificationService;
     //static to avoid multiple timers
     private static Timer timer;
     private static TimerTask timerTask;
@@ -41,20 +42,20 @@ public class NotificationService extends Service {
     private double humMin;
     private double airMin;
     CreateNotification temperatureCreateNotification;
+    public static boolean stopService;
     private GlobalNotificationSharedPref notificationSharedPref;
 
     public NotificationService()
     {
-        super();
+        notificationService = this;
     }
-
-
     /**
      * On create for service
      */
     @Override
     public void onCreate() {
         super.onCreate();
+        notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             restartForeground();
         }
@@ -71,14 +72,21 @@ public class NotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         //Make sure to reinitialised everything
-        if (intent == null) {
-            notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
-            StartService bck = new StartService();
-            bck.startService(this);
+        notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
+        if(notificationSharedPref.getServiceSharedPreference().equalsIgnoreCase("on"))
+        {
+            if (intent == null) {
+                notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
+                StartService bck = new StartService();
+                bck.startService(this);
+            }
+            startAPIObserver();
         }
-
-        startAPIObserver();
-
+        else
+        {
+            stopForeground(true);
+            timer.cancel();
+        }
         // return start sticky so if it is killed by android, it will be restarted with Intent null
         return START_STICKY;
     }
@@ -107,7 +115,6 @@ public class NotificationService extends Service {
             Log.i(TAG, "restarting foreground");
             try
             {
-                notificationSharedPref = new GlobalNotificationSharedPref(getApplicationContext());
                createDefaultNotification();
                 startAPIObserver();
             }
@@ -127,8 +134,16 @@ public class NotificationService extends Service {
         super.onDestroy();
         Log.i(TAG, "onDestroy called");
         // restart the never ending service
-        Intent broadcastIntent = new Intent(RESTART_INTENT);
-        sendBroadcast(broadcastIntent);
+        if(notificationSharedPref.getServiceSharedPreference().equalsIgnoreCase("on"))
+        {
+            Intent broadcastIntent = new Intent(RESTART_INTENT);
+            sendBroadcast(broadcastIntent);
+        }
+        else
+        {
+            stopForeground(true);
+            timer.cancel();
+        }
     }
 
 
@@ -141,9 +156,17 @@ public class NotificationService extends Service {
         super.onTaskRemoved(rootIntent);
         Log.i(TAG, "onTaskRemoved called");
 
-        // restart the never ending service
-        Intent broadcastIntent = new Intent(RESTART_INTENT);
-        sendBroadcast(broadcastIntent);
+        if(notificationSharedPref.getServiceSharedPreference().equalsIgnoreCase("on"))
+        {
+            // restart the never ending service
+            Intent broadcastIntent = new Intent(RESTART_INTENT);
+            sendBroadcast(broadcastIntent);
+        }
+        else
+        {
+            stopForeground(true);
+            timer.cancel();
+        }
     }
 
     /**
@@ -214,7 +237,7 @@ public class NotificationService extends Service {
             @Override
             public void onResponse(@NonNull Call<List<Threshold>> call, @NonNull Response<List<Threshold>> response) {
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && response.body().size() > 0) {
                     tempMin = response.body().get(0).getMinValue();
                     humMin = response.body().get(1).getMinValue();
                     airMin = response.body().get(2).getMinValue();
@@ -253,11 +276,13 @@ public class NotificationService extends Service {
      */
     private void checkOutOfBoundSensor(List<Threshold> thresholds)
     {
+        //TODO-EXTRA: add shared preferences for notification choose
         for (int i = 0; i < thresholds.size(); i++)
         {
             if(thresholds.get(i) != null)
             {
                 if(thresholds.get(i).getSensorType().equalsIgnoreCase("CO2"))
+               //     notificationSharedPref.getShowNotificationForPreference("air_notify").equalsIgnoreCase("yes"))
                 {
                     notificationSharedPref.editSharedPreferences("CO2");
                     if (thresholds.get(i).getMinValue() < airMin)

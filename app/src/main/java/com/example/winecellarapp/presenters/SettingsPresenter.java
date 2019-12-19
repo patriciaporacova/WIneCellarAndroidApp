@@ -1,6 +1,7 @@
 package com.example.winecellarapp.presenters;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,57 +14,69 @@ import retrofit2.Response;
 
 /**
  * Created by Patricia Poracova
+ * Edited by Jakub Piga
  **/
 public class SettingsPresenter {
 
+    private boolean sent;
     /**
-     * Method for sending new Sensor Threshold
-     * It is triggered by change in shared preference
-     *
-     * @param sensor contains name of sensor which thresholds are being changes
-     * @param low contains value of lowest threshold
-     * @param high contains value of highest threshold
-     */
-    public void setSensorThresholds(String sensor, double low, double high) {
-        Call<Void> newTreshold = Utils.getApi().setThresholds(sensor, low, high);
-        newTreshold.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                Log.d("newValues", "New low '" + low + "' new high" + high);
-
-                        /*if (response.isSuccessful() && response.body() != null) {
-                            view.setData(response.body());
-
-                        } else {
-                            view.onErrorLoading(response.message());
-                        }*/
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                //view.onErrorLoading(t.getLocalizedMessage());
-            }
-        });
-    }
-
-    /**
-     * Method for sending new temperature Threshold
+     * Method for sending new Threshold to specific sensor
      * It is triggered by change of either low or high threshold in shared preference
      *
      * @param threshold contains threshold object being updated
+     * return: boolean if sensor thresholds were changed
      */
-    public void setTempThreshold(Threshold threshold) {
-        Call<Threshold> setNewTempThreshold = Utils.getApi().setTempThreshold(threshold);
-        setNewTempThreshold.enqueue(new Callback<Threshold>() {
-            @Override
-            public void onResponse(Call<Threshold> call, Response<Threshold> response) {
-
+    public boolean setSensorThreshold(Threshold threshold,String sensorType)
+    {
+        sent = false;
+        Call<Threshold> setNewSensorThreshold;
+        switch (sensorType)
+        {
+            case ("temperature"):
+            {
+                setNewSensorThreshold = Utils.getApi().setTempThreshold(threshold);
+                break;
+            }
+            case ("Co2"):
+            {
+                setNewSensorThreshold = Utils.getApi().setAirThreshold(threshold);
+                break;
+            }
+            case ("humidity"):
+            {
+                setNewSensorThreshold = Utils.getApi().setHumidityThreshold(threshold);
+                break;
+            }
+            default:
+            {
+                setNewSensorThreshold = null;
+                break;
             }
 
-            @Override
-            public void onFailure(Call<Threshold> call, Throwable t) {
+        }
+        if(setNewSensorThreshold != null)
+        {
+            setNewSensorThreshold.enqueue(new Callback<Threshold>() {
+                @Override
+                public void onResponse(Call<Threshold> call, Response<Threshold> response)
+                {
+                    sent = true;
+                }
 
-            }
-        });
+                @Override
+                public void onFailure(Call<Threshold> call, Throwable t)
+                {
+                    sent = false;
+                }
+            });
+            sent = true;
+        }
+        else
+        {
+            sent = false;
+        }
+        return  sent;
     }
+
+
 }

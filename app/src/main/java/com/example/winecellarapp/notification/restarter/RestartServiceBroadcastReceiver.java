@@ -15,6 +15,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.winecellarapp.GetSetSharedPreferences;
+import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
+import com.example.winecellarapp.notification.NotificationService;
 import com.example.winecellarapp.notification.StartService;
 import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
@@ -27,29 +30,36 @@ public class RestartServiceBroadcastReceiver extends BroadcastReceiver {
     public static final String TAG = RestartServiceBroadcastReceiver.class.getSimpleName();
     private static JobScheduler jobScheduler;
     public static final String RESTART_INTENT = "com.example.notification.restarter";
-
+    GlobalNotificationSharedPref preferences;
     private RestartServiceBroadcastReceiver restartSensorServiceReceiver;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
         Log.d(TAG, "about to start timer " + context.toString());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            scheduleJob(context);
-        } else {
-            registerRestarterReceiver(context);
-            StartService bck = new StartService();
-            bck.startService(context);
+        preferences = new GlobalNotificationSharedPref(context);
+        if(preferences.getServiceSharedPreference().equalsIgnoreCase("on")) //addsharedpreference
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                scheduleJob(context);
+            } else {
+                registerRestarterReceiver(context);
+                StartService bck = new StartService();
+                bck.startService(context);
+            }
+        }
+        else
+        {
+            if(restartSensorServiceReceiver != null)
+                context.unregisterReceiver(restartSensorServiceReceiver);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void scheduleJob(Context context) {
         if (jobScheduler == null) {
-            jobScheduler = (JobScheduler) context
-                    .getSystemService(JOB_SCHEDULER_SERVICE);
+            jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
         }
-        ComponentName componentName = new ComponentName(context,
-                JobService.class);
+        ComponentName componentName = new ComponentName(context, JobService.class);
         JobInfo jobInfo = new JobInfo.Builder(1, componentName)
                 // setOverrideDeadline runs it immediately - you must have at least one constraint
                 // https://stackoverflow.com/questions/51064731/firing-jobservice-without-constraints
