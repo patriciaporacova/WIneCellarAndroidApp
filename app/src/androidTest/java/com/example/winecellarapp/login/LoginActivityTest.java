@@ -31,11 +31,4 @@ public class LoginActivityTest
         onView(withId(R.id.passwordEditText)).perform(replaceText("123456"));
         onView(withId(R.id.passwordLoginButton)).perform(click());
     }
-
-    @Test
-    public void googleSignIn()
-    {
-        // onView(withId(R.id.sign_in_button)).perform(click());
-    }
-
 }
