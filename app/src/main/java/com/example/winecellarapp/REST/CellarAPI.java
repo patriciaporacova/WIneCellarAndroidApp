@@ -14,6 +14,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * rest api CALLS for getting data from database
+ */
 public interface CellarAPI {
 
     
@@ -50,8 +53,14 @@ public interface CellarAPI {
     @GET("minmax/{sensortype}/{startDate}/{endDate}")
     Call<List<Temperature>> getMinAndMaxFromDates(@Path("sensortype") String sensorType, @Path("startDate") DatePathFormatter date,@Path("endDate") DatePathFormatter endDate);
 
-    @GET("avghour/{sensortype}/{date}")
-    Call<List<Temperature>> getAverageSensorFromDay(@Path("sensortype") String sensorType);
+    @GET("avghour/temperature/{date}")
+    Call<List<Temperature>> getAverageSensorFromDayTemp(@Path("date") DatePathFormatter date);
+
+    @GET("avghour/humidity/{date}")
+    Call<List<Humidity>> getAverageSensorFromDayHum(@Path("date") DatePathFormatter date);
+
+    @GET("avghour/co2/{date}")
+    Call<List<Co2>> getAverageSensorFromDayAir(@Path("date") DatePathFormatter date);
 
     @GET("outofbounds")
     Call<List<Threshold>> getOutOfBound();

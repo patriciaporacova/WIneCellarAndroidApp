@@ -100,7 +100,7 @@ public class SetGraphsData<T> extends AppCompatActivity
     }
 
     /**
-     * add data to ChartData object with just one DataSet
+     * Add data to ChartData object with just one DataSet
      *
      * @return Pie data
      */

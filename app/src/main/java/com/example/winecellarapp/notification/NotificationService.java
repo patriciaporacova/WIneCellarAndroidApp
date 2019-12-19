@@ -2,7 +2,6 @@ package com.example.winecellarapp.notification;
 
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -34,15 +33,14 @@ public class NotificationService extends Service {
     public static final String RESTART_INTENT = "com.example.notification.restarter";
     private static String TAG = "NotificationService";
 
+    //static to avoid multiple notification services
     public static NotificationService notificationService;
-    //static to avoid multiple timers
     private static Timer timer;
     private static TimerTask timerTask;
     private double tempMin;
     private double humMin;
     private double airMin;
     CreateNotification temperatureCreateNotification;
-    public static boolean stopService;
     private GlobalNotificationSharedPref notificationSharedPref;
 
     public NotificationService()

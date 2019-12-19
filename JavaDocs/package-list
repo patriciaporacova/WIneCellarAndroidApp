@@ -1,0 +1,15 @@
+com.example.winecellarapp
+com.example.winecellarapp.REST
+com.example.winecellarapp.calendar
+com.example.winecellarapp.graphs
+com.example.winecellarapp.graphs.adapters
+com.example.winecellarapp.graphs.graphs
+com.example.winecellarapp.graphs.setGraphData
+com.example.winecellarapp.login
+com.example.winecellarapp.model
+com.example.winecellarapp.notification
+com.example.winecellarapp.notification.notificationDesign
+com.example.winecellarapp.notification.restarter
+com.example.winecellarapp.presenters
+com.example.winecellarapp.views
+com.example.winecellarapp.views.fragments

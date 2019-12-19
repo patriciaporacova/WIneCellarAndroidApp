@@ -176,11 +176,12 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
             else
             {
                 this.airDates[0] = dates[0];
+                this.airDates[1] = dates[0];
                 setDatesToTextView();
-                xAxis = createGraphsData.setXAxisValues(dates);
+                xAxis = createGraphsData.setXAxisValues(airDates);
                 progressBarCo2Graphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
-                airPresenter.getAirBetweenData(dates[0], this.airDates[1]);
+                airPresenter.getAirBetweenData(airDates[0], this.airDates[1]);
             }
         }
     }
@@ -192,6 +193,10 @@ public class AirFragment extends Fragment implements DataView, ICalendarCallback
         endDate.setText(dateFormat.format(airDates[1]));
     }
 
+    /**
+     * Set data to text view
+     * @param obj with object to set text view
+     */
     @Override
     public void setActualDataToTextView(Object obj) {
         co2Value.setText(((Co2)obj).getReading().toString());
