@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
@@ -32,10 +31,11 @@ public class LoginActivityTest
         onView(withId(R.id.passwordEditText)).perform(replaceText("123456"));
         onView(withId(R.id.passwordLoginButton)).perform(click());
     }
+
     @Test
     public void googleSignIn()
     {
-       // onView(withId(R.id.sign_in_button)).perform(click());
+        // onView(withId(R.id.sign_in_button)).perform(click());
     }
 
 }

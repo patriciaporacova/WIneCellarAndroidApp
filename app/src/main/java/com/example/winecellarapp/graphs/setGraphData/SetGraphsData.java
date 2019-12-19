@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.winecellarapp.model.Co2;
 
 import com.example.winecellarapp.model.Humidity;
@@ -32,7 +34,7 @@ import java.util.List;
  * Class sets data to 3 different type of the graphs
  * @param <T> generic type
  */
-public class SetGraphsData<T>
+public class SetGraphsData<T> extends AppCompatActivity
 {
 
     private DATATYPE action;
@@ -122,10 +124,6 @@ public class SetGraphsData<T>
                 {
 
                     //TODO-ERIC: change humidity
-                    ArrayList<Humidity> humidities = (ArrayList<Humidity>)data;
-                    for (int j = 0; j < humidities.size(); j++) {
-                        entries.add(new PieEntry(Float.valueOf(String.valueOf(humidities.get(j).getReading())), ""));
-                    }
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
                     {
@@ -269,10 +267,7 @@ public class SetGraphsData<T>
                 {
 
                     //TODO-ERIC: change humidity
-                    ArrayList<Humidity> humidities = (ArrayList<Humidity>)data;
-                    for (int j = 0; j < humidities.size(); j++) {
-                        values1.add(new BubbleEntry(i, Float.valueOf(String.valueOf(humidities.get(i).getReading())), i));
-                    }
+
                     ArrayList<Humidity> humidity = (ArrayList<Humidity>)data;
                     for (int j = 0; j < humidity.size(); j++)
                     {
