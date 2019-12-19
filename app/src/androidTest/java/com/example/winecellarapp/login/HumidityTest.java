@@ -98,108 +98,48 @@ public class HumidityTest
                 isDisplayed()));
         appCompatImageButton.perform(click());
 
-        ViewInteraction navigationMenuItemView = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.design_navigation_view),
-                                childAtPosition(
-                                        withId(R.id.nav_view),
-                                        0)),
-                        2),
-                        isDisplayed()));
+        ViewInteraction navigationMenuItemView = onView(allOf(childAtPosition(allOf(withId(R.id.design_navigation_view), childAtPosition(
+                withId(R.id.nav_view), 0)), 2), isDisplayed()));
         navigationMenuItemView.perform(click());
 
-        ViewInteraction linearLayout = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.recycler_view),
-                                childAtPosition(
-                                        withId(android.R.id.list_container),
-                                        0)),
-                        4),
-                        isDisplayed()));
+        ViewInteraction linearLayout = onView(allOf(childAtPosition(allOf(withId(R.id.recycler_view), childAtPosition(
+                withId(android.R.id.list_container), 0)), 4), isDisplayed()));
         linearLayout.perform(click());
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(android.R.id.edit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                1)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(android.R.id.edit), childAtPosition(childAtPosition(
+                withClassName(is("android.widget.ScrollView")), 0), 1)));
         appCompatEditText.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(android.R.id.edit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                1)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(android.R.id.edit), childAtPosition(childAtPosition(
+                withClassName(is("android.widget.ScrollView")), 0), 1)));
         appCompatEditText2.perform(scrollTo(), replaceText("15"));
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(android.R.id.edit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                1),
-                        isDisplayed()));
+        ViewInteraction appCompatEditText3 = onView(allOf(withId(android.R.id.edit), childAtPosition(childAtPosition(
+                withClassName(is("android.widget.ScrollView")), 0), 1), isDisplayed()));
         appCompatEditText3.perform(closeSoftKeyboard());
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
+        ViewInteraction appCompatButton = onView(allOf(withId(android.R.id.button1), withText("OK"), childAtPosition(childAtPosition(
+                withId(R.id.buttonPanel), 0), 3)));
         appCompatButton.perform(scrollTo(), click());
 
-        ViewInteraction linearLayout2 = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.recycler_view),
-                                childAtPosition(
-                                        withId(android.R.id.list_container),
-                                        0)),
-                        5),
-                        isDisplayed()));
+        ViewInteraction linearLayout2 = onView(allOf(childAtPosition(allOf(withId(R.id.recycler_view), childAtPosition(
+                withId(android.R.id.list_container), 0)), 5), isDisplayed()));
         linearLayout2.perform(click());
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(android.R.id.edit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                1)));
+        ViewInteraction appCompatEditText4 = onView(allOf(withId(android.R.id.edit), childAtPosition(childAtPosition(
+                withClassName(is("android.widget.ScrollView")), 0), 1)));
         appCompatEditText4.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(android.R.id.edit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                1)));
+        ViewInteraction appCompatEditText5 = onView(allOf(withId(android.R.id.edit), childAtPosition(childAtPosition(
+                withClassName(is("android.widget.ScrollView")), 0), 1)));
         appCompatEditText5.perform(scrollTo(), replaceText("70"));
 
-        ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(android.R.id.edit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                1),
-                        isDisplayed()));
+        ViewInteraction appCompatEditText6 = onView(allOf(withId(android.R.id.edit), childAtPosition(childAtPosition(
+                withClassName(is("android.widget.ScrollView")), 0), 1), isDisplayed()));
         appCompatEditText6.perform(closeSoftKeyboard());
 
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
+        ViewInteraction appCompatButton2 = onView(allOf(withId(android.R.id.button1), withText("OK"), childAtPosition(
+                childAtPosition(withId(R.id.buttonPanel), 0), 3)));
         appCompatButton2.perform(scrollTo(), click());
     }
 }
