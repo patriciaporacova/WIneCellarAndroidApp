@@ -1,4 +1,4 @@
-package com.example.winecellarapp.fragments;
+package com.example.winecellarapp.views;
 
 /**
  * Created by Jakub Piga

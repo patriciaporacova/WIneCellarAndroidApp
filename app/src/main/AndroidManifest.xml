@@ -19,9 +19,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".views.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".views.MainActivity" />
         <activity android:name=".login.CreateAccount" />
         <activity android:name=".login.LoginActivity">
             <intent-filter>

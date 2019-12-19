@@ -1,4 +1,4 @@
-package com.example.winecellarapp;
+package com.example.winecellarapp.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,14 +14,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.winecellarapp.fragments.AirFragment;
-import com.example.winecellarapp.fragments.HomeFragment;
-import com.example.winecellarapp.fragments.HumidityFragment;
-import com.example.winecellarapp.fragments.TemperatureFragment;
+import com.example.winecellarapp.R;
 import com.example.winecellarapp.login.LoginActivity;
 import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
 import com.example.winecellarapp.notification.StartService;
 import com.example.winecellarapp.notification.restarter.RestartServiceBroadcastReceiver;
+import com.example.winecellarapp.views.fragments.AirFragment;
+import com.example.winecellarapp.views.fragments.HumidityFragment;
+import com.example.winecellarapp.views.fragments.TemperatureFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;

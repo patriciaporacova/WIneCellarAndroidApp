@@ -1,4 +1,4 @@
-package com.example.winecellarapp.fragments;
+package com.example.winecellarapp.views;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.winecellarapp.MainActivity;
 import com.example.winecellarapp.R;
-import com.example.winecellarapp.SettingsActivity;
+import com.example.winecellarapp.views.fragments.AirFragment;
+import com.example.winecellarapp.views.fragments.HumidityFragment;
+import com.example.winecellarapp.views.fragments.TemperatureFragment;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -26,8 +27,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
         view = inflater.inflate(R.layout.home_fragment, container, false);
 
-        //TODO-PATRICIA:click on this button will not change main activity toolbar icon
-        //TODO-PATRICIA: change color of toolbar icon for same color like main color of this buttons
         CardView cardTemperature = (CardView) view.findViewById(R.id.cardTemperature);
         cardTemperature.setOnClickListener(this);
         CardView cardHumidity = (CardView) view.findViewById(R.id.cardHumidity);

@@ -2,7 +2,7 @@ package com.example.winecellarapp.presenters;
 
 import androidx.annotation.NonNull;
 
-import com.example.winecellarapp.DataView;
+import com.example.winecellarapp.views.DataView;
 import com.example.winecellarapp.REST.DatePathFormatter;
 import com.example.winecellarapp.REST.Utils;
 import com.example.winecellarapp.model.Co2;
