@@ -1,39 +1,22 @@
 package com.example.winecellarapp.views;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.EditText;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreference;
-import androidx.preference.SwitchPreferenceCompat;
-
 import com.example.winecellarapp.GetSetSharedPreferences;
 import com.example.winecellarapp.R;
-import com.example.winecellarapp.REST.Utils;
-import com.example.winecellarapp.model.Temperature;
 import com.example.winecellarapp.model.Threshold;
 import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
 import com.example.winecellarapp.notification.NotificationService;
 import com.example.winecellarapp.notification.StartService;
 import com.example.winecellarapp.notification.restarter.RestartServiceBroadcastReceiver;
 import com.example.winecellarapp.presenters.SettingsPresenter;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Patricia Poracova

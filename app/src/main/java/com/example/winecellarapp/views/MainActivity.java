@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.example.winecellarapp.R;
 import com.example.winecellarapp.login.LoginActivity;
 import com.example.winecellarapp.notification.GlobalNotificationSharedPref;
+import com.example.winecellarapp.notification.NotificationService;
 import com.example.winecellarapp.notification.StartService;
 import com.example.winecellarapp.notification.restarter.RestartServiceBroadcastReceiver;
 import com.example.winecellarapp.views.fragments.AirFragment;
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                if(notificationSharedPref.getServiceSharedPreference().equalsIgnoreCase("on"))
+                {
+                    notificationSharedPref.editServiceSharedPreferences("off");
+                    NotificationService.notificationService.stopForeground(true);
+                }
                 finish();
                 break;
             case R.id.nav_settings:

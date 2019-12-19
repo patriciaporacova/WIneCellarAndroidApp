@@ -185,11 +185,12 @@ public class HumidityFragment extends Fragment implements DataView, ICalendarCal
             else
             {
                 this.dates[0] = dates[0];
+                this.dates[1] = dates[0];
                 setDatesToTextView();
-                xAxis = createGraphsData.setXAxisValues(dates);
+                xAxis = createGraphsData.setXAxisValues(this.dates);
                 progressBarHumidityGraphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
-                humidityPresenter.getHumidityBetweenData(dates[0], this.dates[1]);
+                humidityPresenter.getHumidityBetweenData(this.dates[0], this.dates[1]);
             }
         }
     }

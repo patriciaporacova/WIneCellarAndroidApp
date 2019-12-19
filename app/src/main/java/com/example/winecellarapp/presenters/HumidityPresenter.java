@@ -62,9 +62,53 @@ public class HumidityPresenter
      */
     public void getHumidityBetweenData(Date start, Date end)
     {
-        DatePathFormatter startFormated = new DatePathFormatter(start);
-        DatePathFormatter endFormated = new DatePathFormatter(end);
-        Call<List<Humidity>> humidity = Utils.getApi().getAvarageHumidityBetween("Humidity", startFormated, endFormated);
+        if(start.compareTo(end) == 0)
+        {
+            getAverageDateHumidity(start);
+        }
+        else
+        {
+            DatePathFormatter startFormated = new DatePathFormatter(start);
+            DatePathFormatter endFormated = new DatePathFormatter(end);
+            Call<List<Humidity>> humidity = Utils.getApi().getAvarageHumidityBetween("Humidity", startFormated, endFormated);
+            humidity.enqueue(new Callback<List<Humidity>>()
+            {
+                @Override
+                public void onResponse(@NonNull Call<List<Humidity>> call, @NonNull Response<List<Humidity>> response)
+                {
+
+                    if (response.isSuccessful() && response.body() != null)
+                    {
+                        view.setListData(response.body());
+
+                    } else
+                    {
+                        view.onErrorLoading(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Humidity>> call, Throwable t)
+                {
+                    view.onErrorLoading(t.getLocalizedMessage());
+
+                }
+            });
+        }
+
+
+        //TODO-ERIC: Same logic like temperature presenter
+    }
+
+     /**
+     * Get average humidity from one day*
+     * Checks if dates are the same, if they are call getAverageDate, else get average days
+     * @param date day from which to get average
+     */
+    private void getAverageDateHumidity(Date date)
+    {
+        DatePathFormatter date_format = new DatePathFormatter(date);
+        Call<List<Humidity>> humidity = Utils.getApi().getAverageSensorFromDayHum(date_format);
         humidity.enqueue(new Callback<List<Humidity>>()
         {
             @Override
@@ -75,21 +119,18 @@ public class HumidityPresenter
                 {
                     view.setListData(response.body());
 
-                } else
-                {
+                } else {
                     view.onErrorLoading(response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Humidity>> call, Throwable t)
-            {
+            public void onFailure(Call<List<Humidity>> call, Throwable t) {
                 view.onErrorLoading(t.getLocalizedMessage());
-
             }
-        });
 
-        //TODO-ERIC: Same logic like temperature presenter
+        });
     }
+
 }
 

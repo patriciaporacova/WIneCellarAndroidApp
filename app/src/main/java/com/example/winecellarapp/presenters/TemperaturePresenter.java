@@ -63,16 +63,57 @@ public class TemperaturePresenter {
      */
     public void getTempBetweenData(Date start, Date end)
     {
-        DatePathFormatter startFormated = new DatePathFormatter(start);
-        DatePathFormatter endFormated = new DatePathFormatter(end);
-        Call<List<Temperature>> temperature = Utils.getApi().getAverageTemperatureBetween("temperature",startFormated,endFormated);
+        //compare if dates equals
+        if(start.compareTo(end) == 0)
+        {
+            getAverageDateTemperatures(start);
+        }
+        else
+        {
+            DatePathFormatter startFormated = new DatePathFormatter(start);
+            DatePathFormatter endFormated = new DatePathFormatter(end);
+            Call<List<Temperature>> temperature = Utils.getApi().getAverageTemperatureBetween("temperature",startFormated,endFormated);
+            temperature.enqueue(new Callback<List<Temperature>>()
+            {
+                @Override
+                public void onResponse(@NonNull Call<List<Temperature>> call, @NonNull Response<List<Temperature>> response)
+                {
+
+                    if (response.isSuccessful() && response.body() != null) {
+                        view.setListData(response.body());
+
+                    } else {
+                        view.onErrorLoading(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Temperature>> call, Throwable t) {
+                    view.onErrorLoading(t.getLocalizedMessage());
+                }
+
+            });
+        }
+
+    }
+
+    /**
+     * Get average temperature from one day
+     * Checks if dates are the same, if they are call getAverageDate, else get average days
+     * @param date day from which to get average
+     */
+    private void getAverageDateTemperatures(Date date)
+    {
+        DatePathFormatter date_format = new DatePathFormatter(date);
+        Call<List<Temperature>> temperature = Utils.getApi().getAverageSensorFromDayTemp(date_format);
         temperature.enqueue(new Callback<List<Temperature>>()
         {
             @Override
             public void onResponse(@NonNull Call<List<Temperature>> call, @NonNull Response<List<Temperature>> response)
             {
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null)
+                {
                     view.setListData(response.body());
 
                 } else {
@@ -86,7 +127,6 @@ public class TemperaturePresenter {
             }
 
         });
-
     }
 
 }

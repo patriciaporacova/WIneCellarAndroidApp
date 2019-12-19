@@ -54,21 +54,62 @@ public class AirPresenter
 
     /**
      * API call for getting average day co2 levels between dates
+     * Checks if dates are the same, if they are call getAverageDate, else get average days
      * @param start contains start Date
      * @param end contains end Date
      */
     public void getAirBetweenData(Date start, Date end)
     {
-        DatePathFormatter startFormated = new DatePathFormatter(start);
-        DatePathFormatter endFormated = new DatePathFormatter(end);
-        Call<List<Co2>> air = Utils.getApi().getAverageAirBetween("co2",startFormated,endFormated);
+        if(start.compareTo(end) ==0)
+        {
+            getAverageDateAir(start);
+        }
+        else
+        {
+            DatePathFormatter startFormated = new DatePathFormatter(start);
+            DatePathFormatter endFormated = new DatePathFormatter(end);
+            Call<List<Co2>> air = Utils.getApi().getAverageAirBetween("co2",startFormated,endFormated);
+            air.enqueue(new Callback<List<Co2>>()
+            {
+                @Override
+                public void onResponse(@NonNull Call<List<Co2>> call, @NonNull Response<List<Co2>> response)
+                {
+
+                    if (response.isSuccessful() && response.body() != null) {
+                        view.setListData(response.body());
+
+                    } else {
+                        view.onErrorLoading(response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Co2>> call, Throwable t) {
+                    view.onErrorLoading(t.getLocalizedMessage());
+                }
+
+            });
+
+        }
+
+    }
+
+    /**
+     * Get average co2 from one day
+     * @param date day from which to get average
+     */
+    private void getAverageDateAir(Date date)
+    {
+        DatePathFormatter date_format = new DatePathFormatter(date);
+        Call<List<Co2>> air = Utils.getApi().getAverageSensorFromDayAir(date_format);
         air.enqueue(new Callback<List<Co2>>()
         {
             @Override
             public void onResponse(@NonNull Call<List<Co2>> call, @NonNull Response<List<Co2>> response)
             {
 
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null)
+                {
                     view.setListData(response.body());
 
                 } else {
@@ -82,6 +123,5 @@ public class AirPresenter
             }
 
         });
-
     }
 }

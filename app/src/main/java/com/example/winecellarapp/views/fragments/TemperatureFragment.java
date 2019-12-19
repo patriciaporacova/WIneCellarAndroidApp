@@ -177,11 +177,12 @@ public class TemperatureFragment extends Fragment implements DataView, ICalendar
             else
             {
                 this.dates[0] = dates[0];
+                this.dates[1] = dates[0];
                 setDatesToTextView();
-                xAxis = createGraphsData.setXAxisValues(dates);
+                xAxis = createGraphsData.setXAxisValues(this.dates);
                 progressBarTempGraphs.setVisibility(View.VISIBLE);
                 lv.setAdapter(null);
-                temperaturePresenter.getTempBetweenData(dates[0], this.dates[1]);
+                temperaturePresenter.getTempBetweenData(this.dates[0], this.dates[1]);
             }
         }
     }
